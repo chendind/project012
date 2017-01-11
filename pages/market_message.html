@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../source/font/iconfont.css">
+    <link rel="stylesheet" href="../source/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../source/css/mui_overwrite.css">
+    <link rel="stylesheet" href="../source/css/public.css">
+    <link rel="stylesheet" href="../source/css/index.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="../source/js/jquery-1.11.1.min.js"></script>
+    <script src="../source/js/vue.js"></script>
+    <script src="../source/js/vue-tap.js"></script>
+    <script src="../source/mui/js/mui.min.js"></script>
+    <script src="../source/js/ajax.js"></script>
+    <script src="../source/js/public.js"></script>
+    <style>
+    .message{
+        border: none;
+        font-size: 14px;
+    }
+    </style>
+    <script>
+    $(function(){
+        var vm = new Vue({
+            el: "#root",
+            data:{},
+            computed: {},
+            methods:{
+                addMarket: function(){
+                    mui.prompt(' ', '输入商家代码', '添加商家', null, function(){
+
+                    })
+                },
+                message: function(){
+                    console.log(123)
+                },
+                contact: function(){
+                    mui.confirm('拨打电话13812378789？','联系商家',null,function(){
+                        
+                    })
+                }
+            },
+            created: function(){
+
+            },
+            mounted: function(){
+
+            }
+        })
+    })
+        
+    </script>
+</head>
+<body class="bg white">
+<div id="root">
+    <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
+        <a class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
+        <a class="mui-btn mui-btn-blue mui-btn-link mui-pull-right color white">提交</a>
+        <h1 class="mui-title color white">洛姿服饰专卖店</h1>
+    </header>
+    <div class="mui-content bg white">
+        <div class="mui-content-padded color c3" style="margin-left: 15px;margin-bottom: 0;">输入留言</div>
+        <textarea class="message" placeholder="请详细描述你想说的话..."></textarea>
+    </div>
+</div> 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

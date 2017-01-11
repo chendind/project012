@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../source/font/iconfont.css">
+    <link rel="stylesheet" href="../source/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../source/css/mui_overwrite.css">
+    <link rel="stylesheet" href="../source/css/public.css">
+    <link rel="stylesheet" href="../source/css/index.css">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="../source/js/jquery-1.11.1.min.js"></script>
+    <script src="../source/js/vue.js"></script>
+    <script src="../source/js/vue-tap.js"></script>
+    <script src="../source/mui/js/mui.min.js"></script>
+    <script src="../source/js/ajax.js"></script>
+    <script src="../source/js/public.js"></script>
+    <script>
+    $(function(){
+        var vm = new Vue({
+            el: "#root",
+            data:{},
+            computed: {},
+            methods:{
+            },
+            created: function(){
+
+            },
+            mounted: function(){
+
+            }
+        })
+    })
+        
+    </script>
+    <style>
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell{
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+    <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
+        <a class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
+        <h1 class="mui-title color white">零食</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-media">
+                <img class="mui-media-object mui-pull-left img-md" src="../source/images/WechatIMG173.jpg">
+                <div class="mui-media-body" style="padding-top: 20px;">
+                    <p class="color c3">卫龙辣条 200g</p>
+                    <p class="mui-h6 color c9 ">原价20元</p>
+                    <p class="mui-h6 color maincolor ">积分换购88</p>
+                </div>
+                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact()">联系商家</a>
+                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;">销量999</p>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a>
+                    <img class="mui-media-object mui-pull-left" src="../images/muwu.jpg">
+                    <div class="mui-media-body">
+                        木屋
+                        <p class="mui-ellipsis">想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a>
+                    <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+                    <div class="mui-media-body">
+                        CBD
+                        <p class="mui-ellipsis">烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div> 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
