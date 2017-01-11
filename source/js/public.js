@@ -3,6 +3,11 @@ var projectSetting = {
 }
 $(function(){
     $("title").text(projectSetting.title)
+    mui('body').on('tap','[href]',function(e){
+        e.stopPropagation()
+        e.preventDefault()
+        window.location.href=$(this).attr('href');
+    })
     // 配置微信分享参数
     // $.when(getWechatShareConfig(window.location.href)).done(function(data){
     //     if(data.resultCode == 200){
@@ -19,6 +24,7 @@ $(function(){
     //     }
     // });
 });
+
 // 把对象转换成字符串，并进行URI编码，用于url中的查询参数拼接
 function encodeObj(obj){
 	return encodeURI(JSON.stringify(obj));

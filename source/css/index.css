@@ -89,7 +89,7 @@
   padding-top: 11px;
 }
 .icon-bg .iconfont {
-  font-size: 24px !important;
+  font-size: 26px !important;
 }
 .noshadow {
   -webkit-box-shadow: none;
@@ -120,7 +120,7 @@
   background-color: #fff;
 }
 .bottom-bar .mui-tab-item.mui-active {
-  color: #f65f73;
+  color: #7ad8d8;
 }
 .bottom-bar .mui-tab-item .iconfont {
   font-size: 22px;
