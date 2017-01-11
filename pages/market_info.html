@@ -30,9 +30,6 @@
 
                     })
                 },
-                message: function(){
-                    console.log(123)
-                },
                 contact: function(){
                     mui.confirm('拨打电话13812378789？','联系商家',null,function(){
                         
@@ -53,12 +50,12 @@
 <body>
 <div id="root">
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-        <a class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
+        <a href="market.html" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
         <!-- <a class="mui-icon iconfont icon-jia mui-pull-right color white icon-sm" @tap="addMarket()"></a> -->
         <h1 class="mui-title color white">洛姿服饰专卖店</h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
-        <a class="mui-tab-item color white" @tap.prevent.stop="message()">
+        <a class="mui-tab-item color white" href="market_message.html">
             留言
         </a>
     </nav>
