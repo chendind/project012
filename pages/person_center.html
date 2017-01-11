@@ -29,6 +29,9 @@
         
     </script>
     <style>
+        body{
+            background-color: white;
+        }
         div.top{
             height: 175px;
             background-image: url("../source/images/bg.png");
@@ -39,6 +42,12 @@
             height: 80px;
             width: 80px;
             margin: 20px 0 8px;
+        }
+        .mui-table-view-cell:last-child:after{
+            height: 1px;
+        }
+        .mui-table-view:after{
+            height: 0;
         }
     </style>
 </head>
@@ -70,12 +79,20 @@
             <span class="mui-tab-label">个人中心</span>
         </a>
     </nav>
-    <div class="mui-content">
+    <div class="mui-content bg white">
         <div class="top mui-card-content">
             <img class="border circle" src="../source/images/user.png">
             <p class="color c3" style="margin-bottom: 3px;font-size: 15px;">西柚西柚吸吸柚</p>
             <p class="mui-h6 color c9">剩余积分：7728</p>
         </div>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-media">
+                <a href="my_order.html" class="mui-navigate-right">我的订单</a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a href="about_us.html" class="mui-navigate-right">关于我们</a>
+            </li>
+        </ul>
     </div>
 </div> 
 </body>
