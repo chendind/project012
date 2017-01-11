@@ -16,12 +16,16 @@
 .bg {
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
 }
 .bg.contain {
   background-size: contain;
 }
 .bg.maincolor {
   background-color: #7ad8d8;
+}
+.bg.transparent {
+  background-color: transparent;
 }
 .bg.pink {
   background-color: #f65f73;
@@ -34,6 +38,9 @@
 }
 .border {
   border: 1px solid #ddd;
+}
+.borderbottom {
+  border-bottom: 1px solid #ddd;
 }
 .circle {
   border-radius: 50%;
@@ -94,6 +101,19 @@
   padding-bottom: 37%;
   background-position: center;
   background-size: cover;
+}
+.fixBox2 {
+  width: 100%;
+  height: 0;
+  padding-bottom: 64% !important;
+  background-position: center;
+  background-size: cover;
+}
+.noafter:after {
+  display: none !important;
+}
+.nobefore:before {
+  display: none !important;
 }
 .bottom-bar {
   border-top: 1px solid #ddd;

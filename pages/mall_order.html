@@ -25,6 +25,9 @@
             data:{},
             computed: {},
             methods:{
+                order: function(){
+                    
+                }
             },
             created: function(){
 
@@ -37,8 +40,10 @@
         
     </script>
     <style>
-        .mui-grid-view.mui-grid-9 .mui-table-view-cell{
-            border: none;
+        .img-md{
+            max-width: 88px;
+            width: 88px;
+            height: 70px !important;
         }
     </style>
 </head>
@@ -46,32 +51,35 @@
 <div id="root">
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
         <a class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
-        <h1 class="mui-title color white">零食</h1>
+        <h1 class="mui-title color white">确认订单</h1>
     </header>
     <div class="mui-content">
         <ul class="mui-table-view mt0">
             <li class="mui-table-view-cell mui-media">
-                <img class="mui-media-object mui-pull-left img-md" src="../source/images/WechatIMG173.jpg">
-                <div class="mui-media-body" style="padding-top: 10px;">
-                    <p class="color c3">卫龙辣条 200g</p>
-                    <p class="mui-h6 color c9 mt5">原价20元</p>
-                    <p class="mui-h6 color maincolor mt5">积分换购88</p>
+                <div class="mui-media-object mui-pull-left img-md bg" style="background-image:url(../source/images/mask2.jpg)"></div>
+                <!-- <img class="mui-media-object mui-pull-left img-md" src="../source/images/mask2.jpg"> -->
+                <div class="mui-media-body">
+                    <p class="color c3">iPhone 7 Plus  32g  银色</p>
                 </div>
-                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact()">联系商家</a>
-                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量999</p>
+                <div class="mui-media-body" style="position: absolute;bottom: 10px;left: 114px;right: 15px;">
+                    8888积分
+                    <span class="mui-pull-right color c9">×1</span>
+                </div>
             </li>
-            <li class="mui-table-view-cell mui-media">
-                <img class="mui-media-object mui-pull-left img-md" src="../source/images/WechatIMG174.jpg">
-                <div class="mui-media-body" style="padding-top: 10px;">
-                    <p class="color c3">小浣熊干脆面  50g</p>
-                    <p class="mui-h6 color c9 mt5">原价10元</p>
-                    <p class="mui-h6 color maincolor mt5">积分换购50</p>
-                </div>
-                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact()">联系商家</a>
-                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量999</p>
+            <li class="mui-table-view-cell">
+                配送方式
+                <span class="mui-pull-right">快递  免邮</span>
             </li>
         </ul>
     </div>
+    <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
+        <div class="mui-tab-item bg white mui-text-left" style="width: 100%;padding-left: 15px;">
+            <span class="color maincolor">合计：8888积分</span>
+        </div>
+        <a class="mui-tab-item color white" @tap.prevent.stop="order()" style="width:118px;">
+            提交订单
+        </a>
+    </nav>
 </div> 
 </body>
 </html>
