@@ -14,6 +14,8 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="../source/js/jquery-1.11.1.min.js"></script>
     <script src="../source/js/vue.js"></script>
+    <script src="../source/js/vue-router.js"></script>
+    <script src="../source/js/router.js"></script>
     <script src="../source/js/vue-tap.js"></script>
     <script src="../source/mui/js/mui.min.js"></script>
     <script src="../source/js/ajax.js"></script>
@@ -21,32 +23,21 @@
     <script>
     $(function(){
         var vm = new Vue({
-            el: "#root",
-            data:{
-            }
-        })
+          router:router
+        }).$mount('#root')
     })
-        
     </script>
-    <style>
-        body{
-            background-color: white;
+    <style type="text/css">
+        .mui-tab-item.router-link-active{
+            color: #7ad8d8
         }
-        div.top{
-            height: 175px;
-            background-image: url("../source/images/bg.png");
-            background-size: cover;
-            text-align: center;
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell{
+            border: none;
         }
-        img{
-            height: 80px;
-            width: 80px;
-            margin: 20px 0 8px;
-        }
-        .mui-table-view-cell:last-child:after{
+        div.person .mui-table-view-cell:last-child:after{
             height: 1px;
         }
-        .mui-table-view:after{
+        div.person .mui-table-view:after{
             height: 0;
         }
     </style>
@@ -54,50 +45,35 @@
 <body>
 <div id="root">
     <nav class="mui-bar mui-bar-tab bottom-bar noshadow">
-        <a class="mui-tab-item" href="./market.html">
+        <router-link class="mui-tab-item" to="/market">
             <span class="mui-icon">
                 <i class="iconfont icon-icon-yxj-empty-store"></i>
             </span>
-            <span class="mui-tab-label">我的商家</span>
-        </a>
-        <a class="mui-tab-item" href="./mall.html">
+            <span class="mui-tab-label">首页</span>
+        </router-link>
+        <router-link class="mui-tab-item" to="/mall">
             <span class="mui-icon">
                 <i class="iconfont icon-shangcheng"></i>
             </span>
             <span class="mui-tab-label">积分商城</span>
-        </a>
-        <a class="mui-tab-item" href="./content_reco.html">
+        </router-link>
+        <router-link class="mui-tab-item" to="/content">
             <span class="mui-icon">
                 <i class="iconfont icon-tuijianicon"></i>
             </span>
             <span class="mui-tab-label">内容推荐</span>
-        </a>
-        <a class="mui-tab-item mui-active">
+        </router-link>
+        <router-link class="mui-tab-item" to="/person">
             <span class="mui-icon">
                 <i class="iconfont icon-wode"></i>
             </span>
             <span class="mui-tab-label">个人中心</span>
-        </a>
+        </router-link>
     </nav>
-    <div class="mui-content bg white">
-        <div class="top mui-card-content">
-            <img class="border circle" src="../source/images/user.png">
-            <p class="color c3" style="margin-bottom: 3px;font-size: 15px;">西柚西柚吸吸柚</p>
-            <p class="mui-h6 color c9">剩余积分：7728</p>
-        </div>
-        <ul class="mui-table-view">
-            <li class="mui-table-view-cell mui-media">
-                <a href="person_my_order.html" class="mui-navigate-right">我的订单</a>
-            </li>
-            <li class="mui-table-view-cell mui-media">
-                <a href="person_about_us.html" class="mui-navigate-right">关于我们</a>
-            </li>
-        </ul>
-    </div>
+    <router-view></router-view>
 </div> 
 </body>
 </html>
-
 
 
 
