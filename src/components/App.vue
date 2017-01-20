@@ -28,13 +28,22 @@
     </nav>
     <router-view></router-view>
 </div>
-  
+
 </template>
 
 <script>
+//import get from 'ajax/get.js'
+
 export default {
   name: 'app',
   components: {
+  },
+  mounted(){
+    // get.getUser().then((res)=>{
+    //   return res
+    // }).catch((e)=>{
+    //   throw e
+    // })
   }
 }
 </script>
