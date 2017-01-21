@@ -40,3 +40,7 @@ export const addOrder = ({
 })=>{
   return post('/addOrder' + `?productId=${productId}&number=1&phone=${phone}&address=${address}&receiveName=${receiveName}`)
 }
+
+export const searchProduct = (keyword)=>{
+  return post('/searchProduct' + `?keyWord=${keyword}`)
+}
