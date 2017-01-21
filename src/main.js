@@ -15,7 +15,10 @@ Vue.filter('timeFormat', (stamp)=>{
 })
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#root',
-  router: router
+
+Promise.resolve($.post('http://tongzhuang.moovi-tech.com/editUser?id=3')).then(()=>{
+  new Vue({
+    el: '#root',
+    router: router
+  })
 })

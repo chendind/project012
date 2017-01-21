@@ -7,11 +7,13 @@
 	    </header>
 	    <div class="mui-content bg white">
 	        <div>
-	            <p class="title color c3">{{item.title}}</p>
-	            <span class="mui-h6 color c9">{{getTime(item.time)}}</span>
-	            <span class="mui-h6 color c9 mui-pull-right">推送自：{{item.from}}</span>
+	            <p class="title color c3">{{title}}</p>
+	            <span class="mui-h6 color c9">发表日期：{{getTime(time)}}</span>
+	            <span class="mui-h6 color c9 mui-pull-right">推送自：{{author}}</span>
 	            <hr>
-	            <p class="mui-h5 color c3" style="line-height: 24px;">{{item.text}}</p>
+              <div v-html="text">
+
+              </div>
 	        </div>
 	    </div>
 	</div>
@@ -19,27 +21,42 @@
 
 
 <script>
+import {getArticle} from 'ajax'
+
 export default {
 	name: 'content_detail',
-    data: function () {
-        return {
-        	item:{
-	            title: "玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！",
-	            text: "玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！玳瑁、虎斑、踏雪......是猫的品种？人家明明是花色好吗！",
-	            time: 0,
-	            from: "胜山酷彩制衣厂"
-	        }
-        }
-    },
-    methods:{
-        getTime: function (stamp) {
-            var date = new Date(stamp);
-            var y = date.getFullYear();
-            var m = date.getMonth() + 1;
-            var d = date.getDate();
-            return y + "年" + m + "月"  + d + "日";
-        }
-    }
+  data: function () {
+      return {
+      	title: "",
+        text: "",
+        time: "",
+        from: "",
+        author: ""
+      }
+  },
+  methods:{
+      getTime: function (stamp) {
+          var date = new Date(stamp);
+
+          if (stamp == null || String(date) === 'Invalid Date') {
+            return '不明'
+          }
+          var y = date.getFullYear();
+          var m = date.getMonth() + 1;
+          var d = date.getDate();
+          return y + "年" + m + "月"  + d + "日";
+      }
+  },
+  beforeRouteEnter(to, from, next) {
+    getArticle(to.query.id).then((res)=>{
+      next($vm=>{
+        $vm.title = res.title
+        $vm.author = res.author
+        $vm.text = res.text
+        $vm.time = res.time
+      })
+    })
+  }
 }
 </script>
 

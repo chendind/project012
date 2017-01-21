@@ -4,35 +4,32 @@
 	        <h1 class="mui-title color white">内容推荐</h1>
 	    </header>
 		<div class="mui-content">
-	        <a href="#/content_detail">
-	            <div class="bg" v-for="item in items" :style="'height:140px;background-image:url('+item.img+');'">
-	            </div>
-	        </a>
+	        <div>
+	            <router-link :to="{path: '/content_detail', query: {id: item.id}}" class="bg" v-for="item in list" :style="'display:block;height:140px;background-image:url('+item.img+');border:1px solid #fefefe;'">
+	            </router-link>
+	        </div>
         </div>
     </div>
 </template>
 
 
 <script>
-var imgurl1 = require('../assets/images/1.jpg')
-var imgurl2 = require('../assets/images/2.jpg')
-var imgurl3 = require('../assets/images/3.jpg')
-var imgurl4 = require('../assets/images/4.jpg')
+import {getArticleForPage} from 'ajax'
+
 export default {
 	name: 'content',
 	data: function () {
-    	return {
-                items:[{
-                    img: imgurl1
-                },{
-                    img: imgurl2
-                },{
-                    img: imgurl3
-                },{
-                    img: imgurl4
-                }]
-            }
-    },
+  	return {
+      list: []
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    getArticleForPage(0).then((res)=>{
+      next($vm=>{
+        $vm.list = res.list || []
+      })
+    })
+  }
 }
 </script>
 

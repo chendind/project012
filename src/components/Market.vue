@@ -7,10 +7,10 @@
         <div class="mui-content">
           <ul class="mui-table-view mt0" v-for="i in list">
               <li class="mui-table-view-cell mui-media">
-                  <a class="mui-navigate-right" href="#/market_info">
+                  <router-link class="mui-navigate-right" :to="{path: '/market_info', query: {id: i.id}}">
                       <img class="mui-media-object middle border circle" :src="i.headImg">
                       {{i.name}}
-                  </a>
+                  </router-link>
               </li>
           </ul>
       </div>
@@ -18,14 +18,20 @@
 </template>
 
 <script>
-import {getMerchantForPage} from 'ajax'
+import {getMerchantForPage, addFocus} from 'ajax'
 
 export default {
   name: 'market',
   methods:{
       addMarket: function(){
-          mui.prompt(' ', '输入商家代码', '添加商家', null, function(){
-
+          mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
+            addFocus(obj.value).then(()=>{
+              mui.alert('添加成功', ()=>{
+                window.location.reload()
+              })
+            }).catch((e)=>{
+              mui.alert(`添加失败${':' + e.message}`)
+            })
           })
       }
   },
