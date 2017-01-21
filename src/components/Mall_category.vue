@@ -2,7 +2,7 @@
 	<div>
 		<header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
 	        <a href="#/mall" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
-	        <h1 class="mui-title color white">零食</h1>
+	        <h1 class="mui-title color white">{{$route.query.type}}</h1>
 	    </header>
 	    <div class="mui-content">
 	        <ul class="mui-table-view mt0">
@@ -26,7 +26,7 @@ import {getProductForPage} from 'ajax'
 import router from '../router.js'
 
 export default {
-	name: 'mall_catagory',
+	name: 'mall_category',
   data(){
     return {
       list: []

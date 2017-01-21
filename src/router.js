@@ -8,7 +8,7 @@ import Person from './components/Person'
 import Market_info from './components/Market_info'
 import Market_message from './components/Market_message'
 import Mall_search from './components/Mall_search'
-import Mall_catagory from './components/Mall_catagory'
+import Mall_category from './components/Mall_category'
 import Mall_info from './components/Mall_info'
 import Mall_order from './components/Mall_order'
 import Content_detail from './components/Content_detail'
@@ -21,24 +21,24 @@ const routes = [
     path: '/',
     component: App,
     children: [
-      { 
-        path: '/', 
+      {
+        path: '/',
          redirect: '/market'
       },
-      { 
-        path: '/market', 
+      {
+        path: '/market',
         component: Market
       },
-      { 
-        path: '/mall', 
+      {
+        path: '/mall',
         component: Mall
       },
-      { 
-        path: '/content', 
+      {
+        path: '/content',
         component: Content
       },
-      { 
-        path: '/person', 
+      {
+        path: '/person',
         component: Person
       }
     ]
@@ -56,8 +56,8 @@ const routes = [
     component: Mall_search
   },
   {
-    path: '/Mall_catagory',
-    component: Mall_catagory
+    path: '/Mall_category',
+    component: Mall_category
   },
   {
     path: '/Mall_info',

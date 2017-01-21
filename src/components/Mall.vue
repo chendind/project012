@@ -39,7 +39,7 @@
 	        </div>
 	        <ul class="mui-table-view mui-grid-view mui-grid-9 bg white mt10">
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=零食">
+	                <router-link to="/mall_category?type=零食">
 	                    <div class="icon-bg">
 	                        <span class="mui-icon iconfont icon-lingshi1 color white"></span>
 	                    </div>
@@ -47,7 +47,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=服饰">
+	                <router-link to="/mall_category?type=服饰">
 	                    <div class="icon-bg" style="background-color:#c18dd9;">
 	                        <span class="mui-icon iconfont icon-jingpinfushi color white"></span>
 	                    </div>
@@ -55,7 +55,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=饰品">
+	                <router-link to="/mall_category?type=饰品">
 	                    <div class="icon-bg" style="background-color:#fab482;">
 	                        <span class="mui-icon iconfont icon-shishangshipin color white"></span>
 	                    </div>
@@ -63,7 +63,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=百货">
+	                <router-link to="/mall_category?type=百货">
 	                    <div class="icon-bg" style="background-color:#84bffa;">
 	                        <span class="mui-icon iconfont icon-icon color white"></span>
 	                    </div>
@@ -71,7 +71,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=话费">
+	                <router-link to="/mall_category?type=话费">
 	                    <div class="icon-bg" style="background-color:#68d2d4;">
 	                        <span class="mui-icon iconfont icon-taohuafei color white"></span>
 	                    </div>
@@ -79,7 +79,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=手机">
+	                <router-link to="/mall_category?type=手机">
 	                    <div class="icon-bg" style="background-color:#6fd8a6;">
 	                        <span class="mui-icon iconfont icon-shouji color white"></span>
 	                    </div>
@@ -87,7 +87,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=家居">
+	                <router-link to="/mall_category?type=家居">
 	                    <div class="icon-bg" style="background-color:#f29aa3;">
 	                        <span class="mui-icon iconfont icon-jiaju color white"></span>
 	                    </div>
@@ -95,7 +95,7 @@
 	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <router-link to="/mall_catagory?type=运动">
+	                <router-link to="/mall_category?type=运动">
 	                    <div class="icon-bg" style="background-color:#f4bb5f;">
 	                        <span class="mui-icon iconfont icon-z-sport color white"></span>
 	                    </div>
