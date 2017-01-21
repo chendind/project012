@@ -16,6 +16,7 @@
 
 
 <script>
+
 export default {
 	name: 'person_about_us',
     methods:{
@@ -24,7 +25,7 @@ export default {
 
             })
         }
-    },
+    }
 }
 </script>
 

@@ -5,27 +5,11 @@
             <h1 class="mui-title color white">我的商家</h1>
         </header>
         <div class="mui-content">
-          <ul class="mui-table-view mt0">
+          <ul class="mui-table-view mt0" v-for="i in list">
               <li class="mui-table-view-cell mui-media">
                   <a class="mui-navigate-right" href="#/market_info">
-                      <img class="mui-media-object middle border circle" src="../../static/source/images/1.png">
-                      洛兹服饰专卖店
-                  </a>
-              </li>
-          </ul>
-          <ul class="mui-table-view mt10">
-              <li class="mui-table-view-cell mui-media">
-                  <a class="mui-navigate-right" href="#/market_info">
-                      <img class="mui-media-object middle border circle" src="../../static/source/images/2.png">
-                      H&M品牌专卖店
-                  </a>
-              </li>
-          </ul>
-          <ul class="mui-table-view mt10">
-              <li class="mui-table-view-cell mui-media">
-                  <a class="mui-navigate-right" href="#/market_info">
-                      <img class="mui-media-object middle border circle" src="../../static/source/images/3.png">
-                      你的名字服饰专卖店
+                      <img class="mui-media-object middle border circle" :src="i.headImg">
+                      {{i.name}}
                   </a>
               </li>
           </ul>
@@ -34,6 +18,8 @@
 </template>
 
 <script>
+import {getMerchantForPage} from 'ajax'
+
 export default {
   name: 'market',
   methods:{
@@ -44,7 +30,16 @@ export default {
       }
   },
   data: function(){
-    return {}
+    return {
+      list: []
+    }
+  },
+  beforeRouteEnter(to, from, next){
+    getMerchantForPage(0).then((res)=>{
+      next(($vm)=>{
+        $vm.list = res.list || []
+      })
+    })
   }
 }
 </script>

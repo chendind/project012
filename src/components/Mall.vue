@@ -39,68 +39,68 @@
 	        </div>
 	        <ul class="mui-table-view mui-grid-view mui-grid-9 bg white mt10">
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=零食">
 	                    <div class="icon-bg">
 	                        <span class="mui-icon iconfont icon-lingshi1 color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">零食</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=服饰">
 	                    <div class="icon-bg" style="background-color:#c18dd9;">
 	                        <span class="mui-icon iconfont icon-jingpinfushi color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">服饰</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=饰品">
 	                    <div class="icon-bg" style="background-color:#fab482;">
 	                        <span class="mui-icon iconfont icon-shishangshipin color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">饰品</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=百货">
 	                    <div class="icon-bg" style="background-color:#84bffa;">
 	                        <span class="mui-icon iconfont icon-icon color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">百货</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=话费">
 	                    <div class="icon-bg" style="background-color:#68d2d4;">
 	                        <span class="mui-icon iconfont icon-taohuafei color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">话费</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=手机">
 	                    <div class="icon-bg" style="background-color:#6fd8a6;">
 	                        <span class="mui-icon iconfont icon-shouji color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">手机</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=家居">
 	                    <div class="icon-bg" style="background-color:#f29aa3;">
 	                        <span class="mui-icon iconfont icon-jiaju color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">家居</div>
-	                </a>
+	                </router-link>
 	            </li>
 	            <li class="mui-table-view-cell mui-media mui-col-xs-3">
-	                <a href="#/mall_catagory">
+	                <router-link to="/mall_catagory?type=运动">
 	                    <div class="icon-bg" style="background-color:#f4bb5f;">
 	                        <span class="mui-icon iconfont icon-z-sport color white"></span>
 	                    </div>
 	                    <div class="mui-media-body">运动</div>
-	                </a>
+	                </router-link>
 	            </li>
 	        </ul>
 	        <div class="mui-card-content bg maincolor banner center mt10">

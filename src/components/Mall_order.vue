@@ -1,6 +1,6 @@
 
 <template>
-	<div>
+	<div v-if="name">
 		<header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
 	        <a @click="back" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
 	        <h1 class="mui-title color white">确认订单</h1>
@@ -10,32 +10,32 @@
 		    <form class="mui-input-group">
 		    	<div class="mui-input-row">
 		    		<label>收货人</label>
-		    		<input type="text" name="text">
+		    		<input type="text" name="text" v-model="user">
 		    	</div>
 		    	<div class="mui-input-row">
 		    		<label>电话</label>
-		    		<input type="text" name="text">
+		    		<input type="text" name="text" v-model="phone">
 		    	</div>
 		    	<div class="mui-input-row" @click="getAddress">
 		    		<label>地区</label>
 		    		<input class="address" type="text" name="text" readonly="readonly">
 		    	</div>
 		    	<div class="mui-input-row" style="height:auto;">
-		    		<textarea rows="2" placeholder="请输入街道地址"></textarea>
+		    		<textarea rows="2" placeholder="请输入街道地址" v-model="address"></textarea>
 		    	</div>
 		    </form>
 	        <ul class="mui-table-view mt0">
 	            <li class="mui-table-view-cell mui-media">
-		            <a href="#/mall_info">
-		                <div class="mui-media-object mui-pull-left img-md bg" :style="'background-image:url('+imgurl+')'"></div>
+		            <router-link :to="{path: '/mall_info', query: {id: $route.query.id}}">
+		                <div class="mui-media-object mui-pull-left img-md bg" :style="'background-image:url('+img+')'"></div>
 		                <div class="mui-media-body">
-		                    <p class="color c3">iPhone 7 Plus  32g  银色</p>
+		                    <p class="color c3">{{name}}</p>
 		                </div>
 		                <div class="mui-media-body" style="position: absolute;bottom: 10px;left: 114px;right: 15px;">
-		                    8888积分
+		                    {{score}}积分
 		                    <span class="mui-pull-right color c9">×1</span>
 		                </div>
-		            </a>
+		            </router-link>
 	            </li>
 	            <li class="mui-table-view-cell">
 	                配送方式
@@ -60,28 +60,76 @@ require("static/source/mui/css/mui.poppicker.css")
 
 require("static/source/mui/js/mui.picker.js")
 require("static/source/mui/js/mui.poppicker.js")
-var imgurl = require("../../static/source/images/mask2.jpg")
+
+import {getProduct, addOrder} from 'ajax'
+import router from '../router.js'
+
 export default {
 	name: 'mall_order',
     methods:{
-        order: function(){
-            
+        order(){
+          if (this.user == '') {
+            mui.alert('请填写收货人')
+            return
+          }
+          if (this.phone == '') {
+            mui.alert('请填写手机号')
+            return
+          }
+          if (this.block == '') {
+            mui.alert('请填写地区')
+            return
+          }
+          if (this.address == '') {
+            mui.alert('请填写地址')
+            return
+          }
+
+          addOrder({
+            productId: this.$route.query.id,
+            receiveName: this.user,
+            phone: this.phone,
+            address: this.block + ' ' + this.address
+          }).then((res)=>{
+            mui.alert('提交成功', ()=>{
+              router.push({path: '/person_my_order'})
+            })
+          }).catch((e)=>{
+            mui.alert(e.message)
+          })
         },
         back: function () {
         	history.back();
         },
         getAddress: function () {
-			var picker = new mui.PopPicker({layer:3});
-	    	picker.setData(cityData);
-			picker.show(function(items) {
-				$("input.address").val(items[0].text + " " +items[1].text + " " + items[2].text);
-			});
+          var picker = new mui.PopPicker({layer:3});
+          picker.setData(cityData);
+          picker.show((items)=>{
+            var block = items[0].text + " " +items[1].text + " " + items[2].text;
+            $("input.address").val(block);
+            this.block = block
+          });
         }
     },
     data(){
     	return {
-    		imgurl
+    		img: '',
+        name: '',
+        score: '',
+        user: '',
+        phone: '',
+        block: '',
+        address: ''
     	}
+    },
+    beforeRouteEnter(to, from, next){
+      getProduct(to.query.id).then((res)=>{
+        next($vm => {
+          $vm.img = res.img
+          $vm.name = res.name
+          $vm.score = res.score
+        })
+      })
     }
 }
 </script>

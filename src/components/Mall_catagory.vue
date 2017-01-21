@@ -6,25 +6,14 @@
 	    </header>
 	    <div class="mui-content">
 	        <ul class="mui-table-view mt0">
-	            <li class="mui-table-view-cell mui-media">
-	                <img class="mui-media-object mui-pull-left img-md" src="~images/WechatIMG173.jpg">
+	            <li class="mui-table-view-cell mui-media" v-for="i in list">
+	                <img class="mui-media-object mui-pull-left img-md" :src="i.img">
 	                <div class="mui-media-body" style="padding-top: 10px;">
-	                    <p class="color c3">卫龙辣条 200g</p>
-	                    <p class="mui-h6 color c9 mt5">原价20元</p>
-	                    <p class="mui-h6 color maincolor mt5">积分换购88</p>
+	                    <p class="color c3">{{i.name}}</p>
+	                    <p class="mui-h6 color maincolor mt5">积分换购{{i.score}}</p>
 	                </div>
-	                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact()">立即兑换</a>
-	                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量999</p>
-	            </li>
-	            <li class="mui-table-view-cell mui-media">
-	                <img class="mui-media-object mui-pull-left img-md" src="~images/WechatIMG174.jpg">
-	                <div class="mui-media-body" style="padding-top: 10px;">
-	                    <p class="color c3">小浣熊干脆面  50g</p>
-	                    <p class="mui-h6 color c9 mt5">原价10元</p>
-	                    <p class="mui-h6 color maincolor mt5">积分换购50</p>
-	                </div>
-	                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact()">立即兑换</a>
-	                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量999</p>
+	                <a class="mui-btn mui-btn-outlined maincolor" style="" @tap="contact(i)">立即兑换</a>
+	                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量{{i.sold}}</p>
 	            </li>
 	        </ul>
 	    </div>
@@ -33,8 +22,28 @@
 
 
 <script>
+import {getProductForPage} from 'ajax'
+import router from '../router.js'
+
 export default {
-	name: 'mall_catagory'
+	name: 'mall_catagory',
+  data(){
+    return {
+      list: []
+    }
+  },
+  methods: {
+    contact(i){
+      router.push({path: '/mall_order', query: {id: i.id}})
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    getProductForPage(0, to.query.type).then(res => {
+      next($vm => {
+        $vm.list = res.list || []
+      })
+    })
+  }
 }
 </script>
 
