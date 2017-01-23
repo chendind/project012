@@ -23,7 +23,7 @@ export const getMerchantForPage = (start)=>{
   /*
    * 应为type = user
    */
-  return get('/getMerchantForPage' + `?start=${start}&length=100&type=back`)
+  return get('/getMerchantForPage' + `?start=${start}&length=100&type=user`)
 }
 
 export const getMerchant = (id) => {
