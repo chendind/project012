@@ -16,9 +16,9 @@ Vue.filter('timeFormat', (stamp)=>{
 
 /* eslint-disable no-new */
 
-Promise.resolve($.post('http://tongzhuang.moovi-tech.com/editUser?id=3')).then(()=>{
+// Promise.resolve($.post('http://tongzhuang.moovi-tech.com/editUser?id=3')).then(()=>{
   new Vue({
     el: '#root',
     router: router
   })
-})
+// })

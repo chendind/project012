@@ -1,0 +1,15 @@
+<script type="text/javascript" src="static/source/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	var r = /code=(\w*)&/
+	var code = r.exec(location.search)[1]
+	var ajax = $.ajax({
+			url: "/oauth",
+			data: {
+				code: code
+			}
+		})
+	$.when(ajax).done(function () {
+		window.location.href = "index.html"
+	})
+
+</script>

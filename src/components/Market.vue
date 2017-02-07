@@ -4,7 +4,9 @@
             <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket()"></a>
             <h1 class="mui-title color white">我的商家</h1>
         </header>
-        <div class="mui-content">
+    <div id="scroll" class="mui-content mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <ul class="mui-table-view">
           <ul class="mui-table-view mt0" v-for="i in list">
               <li class="mui-table-view-cell mui-media">
                   <router-link class="mui-navigate-right" :to="{path: '/market_info', query: {id: i.id}}">
@@ -13,7 +15,9 @@
                   </router-link>
               </li>
           </ul>
+        </ul>
       </div>
+    </div>
   </div>
 </template>
 
@@ -22,7 +26,21 @@ import {getMerchantForPage, addFocus} from 'ajax'
 
 export default {
   name: 'market',
-  methods:{
+  data: function(){
+    return {
+      list: [],
+      DATALENGTH: 5,
+      ListStart: 0
+    }
+  },
+  // beforeRouteEnter(to, from, next){
+  //   getMerchantForPage(0,10).then((res)=>{
+  //     next(($vm)=>{
+  //       $vm.list = res.list || []
+  //     })
+  //   })
+  // },
+  methods: {
       addMarket: function(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
             addFocus(obj.value).then(()=>{
@@ -33,24 +51,64 @@ export default {
               mui.alert(`添加失败${':' + e.message}`)
             })
           })
-      }
-  },
-  data: function(){
-    return {
-      list: []
+      },
+    getNewest: function () {
+        var self = this;
+        getMerchantForPage(0,self.DATALENGTH).then((res)=>{
+            self.list = res.list || [];
+            self.ListStart = res.list.length;
+
+            mui('#scroll').pullRefresh().endPulldownToRefresh();
+            if(res.list.length == res.countAll){
+                mui('#scroll').pullRefresh().endPullupToRefresh(true);
+            }
+            else{
+                mui('#scroll').pullRefresh().refresh(true);
+            }
+        })
+    },
+    getMore: function () {
+        var self = this;
+        getMerchantForPage(self.ListStart,self.DATALENGTH).then((res)=>{
+            self.list = self.list.concat(res.list);
+
+            if(self.ListStart + res.list.length == res.countAll){
+                mui('#scroll').pullRefresh().endPullupToRefresh(true);
+            }
+            else{
+                mui('#scroll').pullRefresh().endPullupToRefresh(false);
+            }
+
+            self.ListStart += self.DATALENGTH;
+        })
     }
   },
-  beforeRouteEnter(to, from, next){
-    getMerchantForPage(0).then((res)=>{
-      next(($vm)=>{
-        $vm.list = res.list || []
-      })
-    })
-  }
+  mounted: function () {
+      var self = this;            
+      mui.init();
+      mui.ready(function(){
+          mui("#scroll").pullRefresh({
+              down: {
+                  callback : function(){
+                      self.getNewest();
+                  }
+              },
+              up: {
+                  auto: true,
+                  contentnomore: '没有更多消息了',
+                  callback : function(){
+                      self.getMore();
+                  }
+              }
+          });
+      });
+  } 
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
+<style scoped>
+  #scroll{
+    padding-bottom: 50px;
+  }
 </style>

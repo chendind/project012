@@ -8,7 +8,8 @@
 	            取消
 	        </a>
 	    </header>
-	    <div class="mui-content">
+      <div id="scroll" class="mui-content mui-scroll-wrapper">
+        <div class="mui-scroll">
 	        <ul class="mui-table-view mt0">
 	            <li class="mui-table-view-cell mui-media" v-for="i in list">
 	                <img class="mui-media-object mui-pull-left img-md" :src="i.img">
@@ -20,13 +21,14 @@
 	                <p class="mui-h6 center color c9 mt5" style="width: 82px;position:absolute;right:15px;top: 75px;">销量{{i.sold}}</p>
 	            </li>
 	        </ul>
+        </div>
 	    </div>
 	</div>
 </template>
 
 
 <script>
-import {searchProduct} from 'ajax'
+import {searchProductForPage} from 'ajax'
 import router from '../router.js'
 
 var throttle = require('lodash.throttle');
@@ -45,13 +47,72 @@ export default {
   methods: {
     contact(i){
       router.push({path: '/mall_order', query: {id: i.id}})
+    },
+    getNewest: function () {
+        var self = this;
+        searchProductForPage(self.keyword,0,self.DATALENGTH).then((res)=>{
+            self.list = res.list || [];
+            self.ListStart = res.list.length;
+
+            mui('#scroll').pullRefresh().endPulldownToRefresh();
+            if(res.list.length == self.DATALENGTH){
+                mui('#scroll').pullRefresh().endPullupToRefresh(true);
+            }
+            else{
+                mui('#scroll').pullRefresh().refresh(true);
+            }
+        })
+    },
+    getMore: function () {
+        var self = this;
+        searchProductForPage(self.keyword,self.ListStart,self.DATALENGTH).then((res)=>{
+            self.list = self.list.concat(res.list);
+
+            if(res.list.length == self.DATALENGTH){
+                mui('#scroll').pullRefresh().endPullupToRefresh(true);
+            }
+            else{
+                mui('#scroll').pullRefresh().endPullupToRefresh(false);
+            }
+
+            self.ListStart += self.DATALENGTH;
+        })
     }
   },
+  mounted: function () {
+        var self = this;            
+        mui.init();
+        mui.ready(function(){
+            mui("#scroll").pullRefresh({
+                down: {
+                    callback : function(){
+                        self.getNewest();
+                    }
+                },
+                up: {
+                    auto: false,
+                    contentnomore: '没有更多消息了',
+                    callback : function(){
+                        self.getMore();
+                    }
+                }
+            });
+        });
+    } ,  
   created(){
     var $vm = this
     this.search = throttle(()=>{
-      searchProduct($vm.keyword).then((res)=>{
+      searchProductForPage($vm.keyword,0,5).then((res)=>{
         $vm.list = res.list || []
+        self.ListStart = res.list.length;
+
+            mui('#scroll').pullRefresh().endPulldownToRefresh();
+            if(res.list.length == res.countAll){
+                mui('#scroll').pullRefresh().endPullupToRefresh(true);
+            }
+            else{
+                mui('#scroll').pullRefresh().refresh(true);
+            }
       })
     }, 500)
 
@@ -59,7 +120,9 @@ export default {
   data() {
     return {
       list: [],
-      keyword: ''
+      keyword: '',
+      DATALENGTH: 5,
+      ListStart: 0
     }
   }
 }

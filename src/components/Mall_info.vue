@@ -1,7 +1,7 @@
 <template>
 	<div v-if="name">
 		<header class="mui-bar mui-bar-nav top-bar bg transparent noshadow">
-	        <a href="#/mall" class="mui-icon iconfont icon-zuo1 color maincolor icon-sm"></a>
+	        <a @click="back" class="mui-icon iconfont icon-zuo1 color maincolor icon-sm"></a>
 	    </header>
 	    <div class="mui-card-header mui-card-media fixBox2 noafter" :style="'background-image:url('+img+')'"></div>
 	    <div class="mui-card-content bg white borderbottom">
@@ -40,6 +40,11 @@ export default {
       detail: '',
       sold: ''
 		}
+	},
+	methods: {
+		back: function () {
+        	history.back();
+        }
 	},
   beforeRouteEnter(to, from, next){
     getProduct(to.query.id).then((res)=>{
