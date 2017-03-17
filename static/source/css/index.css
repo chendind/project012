@@ -1,5 +1,6 @@
 .color.white {
-  color: #fff;
+  color: #fff !important;
+  background-color: transparent !important;
 }
 .color.c3 {
   color: #333;
