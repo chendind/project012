@@ -110,32 +110,17 @@
 	            </div>
 	        </div>
 	        <div class="mui-row">
-	            <div class="mui-col-xs-6">
+	            <div class="mui-col-xs-6" v-for="item in list">
 	                <div class="mui-card" style="margin-right:5px">
-	                    <div href="#/mall_info" class="mui-card-header mui-card-media bg contain" :style="'height:40vw;background-image:url('+imgurl+');'"></div>
-	                    <div href="#/mall_info" class="mui-card-content">
+	                    <div :href="'#/mall_info?id='+item.id" class="mui-card-header mui-card-media bg contain" :style="'height:40vw;background-image:url('+item.img+');'"></div>
+	                    <div :href="'#/mall_info?id='+item.id" class="mui-card-content">
 	                        <div class="mui-card-content-inner">
-	                            <p class="color c3 mb0">iPhone</p>
-	                            <p>32G 银色</p>
-	                            <p class="color maincolor mb0">积分 8888</p>
+	                            <p class="color c3 mb0">{{item.name}}</p>
+	                            <p>{{item.description}}</p>
+	                            <p class="color maincolor mb0">积分 {{item.type}}</p>
 	                        </div>
 	                    </div>
-	                    <div href="#/mall_order" class="mui-card-content bg maincolor center pd10">
-	                        <span class="color white">立即兑换</span>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="mui-col-xs-6">
-	                <div class="mui-card" style="margin-left:5px">
-	                    <div href="#/mall_info" class="mui-card-header mui-card-media bg contain"  :style="'height:40vw;background-image:url('+imgurl+');'"></div>
-	                    <div href="#/mall_info" class="mui-card-content">
-	                        <div class="mui-card-content-inner">
-	                            <p class="color c3 mb0">iPhone</p>
-	                            <p>32G 银色</p>
-	                            <p class="color maincolor mb0">积分 8888</p>
-	                        </div>
-	                    </div>
-	                    <div href="#/mall_order" class="mui-card-content bg maincolor center pd10">
+	                    <div :href="'#/mall_order?id='+item.id" class="mui-card-content bg maincolor center pd10">
 	                        <span class="color white">立即兑换</span>
 	                    </div>
 	                </div>
@@ -148,14 +133,26 @@
 
 <script>
 var imgurl = require("../../static/source/images/mobile.png");
+import {getProductForPage} from 'ajax'
 export default {
 	name: 'mall',
 	mounted: function () {
 		mui('.mui-slider').slider();
 	},
 	data: function(){
-	    return {imgurl}
-	}
+	    return {
+	    	imgurl,
+	    	list: []
+	    }
+	},
+	beforeRouteEnter(to, from, next){
+	    getProductForPage(0, 2).then((res)=>{
+	      next($vm=>{
+	        $vm.list = res.list
+	      })
+	    })
+
+  	} 
 }
 </script>
 

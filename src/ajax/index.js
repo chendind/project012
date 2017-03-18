@@ -43,15 +43,16 @@ export const getOrderForPage_User = (start, length) => {
 }
 
 export const getProductForPage = (start, length, type) => {
-  return get('/getProductForPage' + `?start=${start}&length=${length}&type=${type}`)
+  if (type == undefined) {
+    return get('/getProductForPage' + `?start=${start}&length=${length}`)
+  }
+  else{
+    return get('/getProductForPage' + `?start=${start}&length=${length}&type=${type}`)
+  }
 }
 
 export const getProduct = (id) => {
-  return get('/getProductForPage' + `?start=0&length=1000`).then((res)=>{
-    return Promise.resolve((res.list || []).find((d)=>{
-      return d.id == id
-    }))
-  })
+  return post('/getProduct' + `?id=${id}`)
 }
 
 export const addOrder = (productId, receiveName, phone, address)=>{

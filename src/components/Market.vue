@@ -43,13 +43,17 @@ export default {
   methods: {
       addMarket: function(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
-            addFocus(obj.value).then(()=>{
-              mui.alert('添加成功', ()=>{
-                window.location.reload()
+            if (obj.index === 0) {
+              return
+            } else {
+              addFocus(obj.value).then(()=>{
+                mui.alert('添加成功', ()=>{
+                  window.location.reload()
+                })
+              }).catch((e)=>{
+                mui.alert(`添加失败${':' + e.message}`)
               })
-            }).catch((e)=>{
-              mui.alert(`添加失败${':' + e.message}`)
-            })
+            }
           })
       },
     getNewest: function () {
