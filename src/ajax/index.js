@@ -82,3 +82,7 @@ export const addFocus = (code)=>{
 export const getUser = ()=>{
   return post('/getUser')
 }
+
+export const getCarouselList = ()=>{
+  return get('/getCarouselList');
+}

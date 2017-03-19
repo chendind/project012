@@ -7,34 +7,14 @@
 	    <div class="mui-content">
 	        <div id="slider" class="mui-slider" >
 	            <div class="mui-slider-group mui-slider-loop">
-	                <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-	                <div class="mui-slider-item mui-slider-item-duplicate">
-	                    <a href="#">
-	                        <img src="~images/mask1.jpg">
-	                    </a>
-	                </div>
-	                <!-- 第一张 -->
-	                <div class="mui-slider-item">
-	                    <a href="#">
-	                        <img src="~images/mask1.jpg">
-	                    </a>
-	                </div>
-	                <!-- 第二张 -->
-	                <div class="mui-slider-item">
-	                    <a href="#">
-	                        <img src="~images/mask1.jpg">
-	                    </a>
-	                </div>
-	                <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-	                <div class="mui-slider-item mui-slider-item-duplicate">
-	                    <a href="#">
-	                        <img src="~images/mask1.jpg">
+	                <div class="mui-slider-item" v-for="(carousel,$index) in carouselList" :class="{'mui-slider-item-duplicate': $index == 0 || $index == carouselList.length}">
+	                    <a :href="'#/mall_info?id='+carousel.productId" alt="1" :style="{backgroundImage: 'url('+carousel.img+')'}">
+	                        <!-- <img :src="carousel.img"> -->
 	                    </a>
 	                </div>
 	            </div>
 	            <div class="mui-slider-indicator">
-	                <div class="mui-indicator mui-active"></div>
-	                <div class="mui-indicator"></div>
+	                <div class="mui-indicator" v-for="n in carouselLength" :class="{'mui-active': n == 1}"></div>
 	            </div>
 	        </div>
 	        <ul class="mui-table-view mui-grid-view mui-grid-9 bg white mt10">
@@ -133,16 +113,39 @@
 
 <script>
 var imgurl = require("../../static/source/images/mobile.png");
-import {getProductForPage} from 'ajax'
+import {getProductForPage,getCarouselList } from 'ajax'
 export default {
 	name: 'mall',
 	mounted: function () {
-		mui('.mui-slider').slider();
+    mui.init();
+    getCarouselList().then((res)=>{
+      let _l = []
+      if(res.list.length > 0){
+        _l = res.list
+      }
+      else{
+        _l = [require('images/mask1.jpg')]
+      }
+      let ln = _l.length
+      this.carouselLength = ln
+      _l.push(_l[0])
+      _l.unshift(_l[ln-1])
+      console.log(_l)
+      this.carouselList = _l
+      this.$nextTick(()=>{
+        mui.ready(()=>{
+          mui('.mui-slider').slider();
+        })
+
+      })
+    })
 	},
 	data: function(){
 	    return {
 	    	imgurl,
-	    	list: []
+	    	list: [],
+        carouselLength: 0,
+        carouselList: []
 	    }
 	},
 	beforeRouteEnter(to, from, next){
@@ -152,13 +155,32 @@ export default {
 	      })
 	    })
 
-  	} 
+  	}
 }
 </script>
 
 <style scoped>
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
     border: none;
+}
+.mui-slider-item{
+  position: relative;
+  width: 100% !important;
+  height: 0 !important;
+  padding-bottom: 53%;
+}
+.mui-slider-item>a{
+  position: absolute !important;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+.mui-slider-item>a>img{
+  width: 100%;
+  height: 100%;
 }
 </style>
 
