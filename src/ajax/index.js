@@ -62,7 +62,9 @@ export const addOrder = (productId, receiveName, phone, address)=>{
 export const searchProduct = (keyword)=>{
   return post('/searchProduct' + `?keyWord=${keyword}`)
 }
-
+export const getRecommendProduct = () => {
+  return get('/getProductForPage' + `?recommend=1`)
+}
 export const searchProductForPage = (keyword, start, length)=>{
   return post('/searchProductForPage' + `?keyWord=${keyword}&start=${start}&length=${length}`)
 }

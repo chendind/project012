@@ -113,7 +113,7 @@
 
 <script>
 var imgurl = require("../../static/source/images/mobile.png");
-import {getProductForPage,getCarouselList } from 'ajax'
+import {getProductForPage,getCarouselList,getRecommendProduct } from 'ajax'
 export default {
 	name: 'mall',
 	mounted: function () {
@@ -149,13 +149,12 @@ export default {
 	    }
 	},
 	beforeRouteEnter(to, from, next){
-	    getProductForPage(0, 2).then((res)=>{
-	      next($vm=>{
-	        $vm.list = res.list
-	      })
-	    })
-
-  	}
+    getRecommendProduct().then((res)=>{
+      next($vm=>{
+        $vm.list = res.list;
+      })
+    })
+	}
 }
 </script>
 
