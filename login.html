@@ -1,15 +1,17 @@
 <script type="text/javascript" src="static/source/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
-	var r = /code=(\w*)&/
-	var code = r.exec(location.search)[1]
-	var ajax = $.ajax({
-			url: "/oauth",
-			data: {
-				code: code
-			}
-		})
-	$.when(ajax).done(function () {
-		window.location.href = "index.html"
-	})
+  var r = /code=(\w*)&/
+  var code = r.exec(location.search)[1]
+  // 取得code，并访问登录api
+  var ajax = $.ajax({
+      url: "/oauth",
+      data: {
+        code: code
+      }
+    })
+  $.when(ajax).done(function () {
+    // api成功后，跳转页面到你的应用首页
+    window.location.href = "index.html"
+  })
 
 </script>
