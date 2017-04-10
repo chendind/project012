@@ -3,13 +3,13 @@
   background-color: transparent !important;
 }
 .color.c3 {
-  color: #333;
+  color: #333 !important;
 }
 .color.c6 {
-  color: #666;
+  color: #666 !important;
 }
 .color.c9 {
-  color: #999;
+  color: #999 !important;
 }
 .color.maincolor {
   color: #7ad8d8;
@@ -32,7 +32,7 @@
   background-color: #f65f73;
 }
 .bg.white {
-  background-color: #fff;
+  background-color: #fff !important;
 }
 .middle {
   vertical-align: middle;

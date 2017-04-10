@@ -32,6 +32,7 @@
 	            </div>
 	        </div>
 	    </div>
+      <a :href="'tel:'+data.phone" style="display: none;" id="telphoneTag"></a>
 	</div>
 </template>
 
@@ -43,21 +44,14 @@ import {getMerchant} from 'ajax'
 export default {
 	name: "market_info",
     methods:{
-        addMarket: function(){
-            mui.prompt(' ', '输入商家代码', '添加商家', null, function(){
-
-            })
-        },
-        contact: function(){
-            mui.confirm(`拨打电话${this.data.phone}？`,'联系商家',null,function(){
-
-            })
-        }
+      contact(){
+        document.getElementById('telphoneTag').click();
+      }
     },
     data(){
     	return {
     		data: {
-
+          phone: '',
         }
     	}
     },

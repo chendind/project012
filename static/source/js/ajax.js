@@ -3,6 +3,7 @@
 var baseUrl = "http://inter.qess.me";// api地址
 var baseUrl2 = "http://test.qess.me";// 项目地址，也用于editCookie
 var appId = "wx51e4e7ced9ff48f1";
+appId = 'wx886a3b874e4322a4';
 
 function successHandle(data){
 	if(data.resultCode == 402){

@@ -45,7 +45,7 @@
 	    </div>
 	    <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
 	        <div class="mui-tab-item bg white mui-text-left" style="width: 100%;padding-left: 15px;">
-	            <span class="color maincolor">合计：8888积分</span>
+	            <span class="color maincolor">合计：{{score}}积分</span>
 	        </div>
 	        <a class="mui-tab-item color white" @tap.prevent.stop="order()" style="width:118px;">
 	            提交订单
@@ -84,7 +84,6 @@ export default {
             mui.alert('请填写地址')
             return
           }
-
           addOrder({
             productId: this.$route.query.id,
             receiveName: this.user,

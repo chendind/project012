@@ -10,7 +10,7 @@ const factory = (ajax_) => (url) => {
       return Promise.resolve(res)
     }
     else if (res.state == 10011){
-      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx299f8a78b8ea872d&redirect_uri=http%3a%2f%2ftongzhuang.moovi-tech.com%2flogin.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx886a3b874e4322a4&redirect_uri=http%3a%2f%2ftongzhuang.moovi-tech.com%2flogin.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
     }
     else {
       return Promise.reject(new Error(res.detail))
@@ -55,7 +55,7 @@ export const getProduct = (id) => {
   return post('/getProduct' + `?id=${id}`)
 }
 
-export const addOrder = (productId, receiveName, phone, address)=>{
+export const addOrder = ({productId, receiveName, phone, address})=>{
   return post('/addOrder' + `?productId=${productId}&number=1&phone=${phone}&address=${address}&receiveName=${receiveName}`)
 }
 
