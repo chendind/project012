@@ -12,6 +12,9 @@
             <li class="mui-table-view-cell mui-media">
                 <a href="#/person_about_us" class="mui-navigate-right">关于我们</a>
             </li>
+            <li class="mui-table-view-cell mui-media">
+                <a href="#/history_rate" class="mui-navigate-right">历史评价</a>
+            </li>
         </ul>
     </div>
 </template>

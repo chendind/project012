@@ -1,19 +1,20 @@
 <template>
   <div class="mui-content">
-      <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-            <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket()"></a>
-            <h1 class="mui-title color white">我的商家</h1>
-        </header>
+    <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
+      <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket()"></a>
+      <a class="mui-icon iconfont icon-saoyisao mui-pull-right color white mh5" @tap="addMarket()"></a>
+      <h1 class="mui-title color white">我的商家</h1>
+    </header>
     <div id="scroll" class="mui-content mui-scroll-wrapper">
       <div class="mui-scroll">
         <ul class="mui-table-view">
           <ul class="mui-table-view mt0" v-for="i in list">
-              <li class="mui-table-view-cell mui-media">
-                  <router-link class="mui-navigate-right" :to="{path: '/market_info', query: {id: i.id}}">
-                      <img class="mui-media-object middle border circle" :src="i.headImg">
-                      {{i.name}}
-                  </router-link>
-              </li>
+            <li class="mui-table-view-cell mui-media">
+              <router-link class="mui-navigate-right" :to="{path: '/market_info', query: {id: i.id}}" v-tap>
+                <img class="mui-media-object middle border circle" :src="i.headImg">
+                {{i.name}}
+              </router-link>
+            </li>
           </ul>
         </ul>
       </div>
@@ -88,7 +89,7 @@ export default {
     }
   },
   mounted: function () {
-      var self = this;            
+      var self = this;
       mui.init();
       mui.ready(function(){
           mui("#scroll").pullRefresh({
@@ -106,7 +107,7 @@ export default {
               }
           });
       });
-  } 
+  }
 }
 </script>
 

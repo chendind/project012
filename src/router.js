@@ -1,19 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import App from './components/App'
-import Market from './components/Market'
-import Mall from './components/Mall'
-import Content from './components/Content'
-import Person from './components/Person'
-import Market_info from './components/Market_info'
-import Market_message from './components/Market_message'
-import Mall_search from './components/Mall_search'
-import Mall_category from './components/Mall_category'
-import Mall_info from './components/Mall_info'
-import Mall_order from './components/Mall_order'
-import Content_detail from './components/Content_detail'
-import Person_about_us from './components/Person_about_us'
-import Person_my_order from './components/Person_my_order'
+import App from 'src/components/App'
 
 Vue.use(VueRouter)
 const routes = [
@@ -23,61 +10,122 @@ const routes = [
     children: [
       {
         path: '/',
-         redirect: '/market'
+        name: 'market',
+        redirect: '/market'
       },
       {
         path: '/market',
-        component: Market
+        name: 'market',
+        component(r){
+          r(require('src/components/Market'));
+        }
       },
       {
         path: '/mall',
-        component: Mall
+        name: 'mall',
+        component(r){
+          r(require('src/components/Mall'));
+        }
       },
       {
         path: '/content',
-        component: Content
+        name: 'content',
+        component(r){
+          r(require('src/components/Content'));
+        }
       },
       {
         path: '/person',
-        component: Person
+        name: 'person',
+        component(r){
+          r(require('src/components/Person'));
+        }
       }
     ]
   },
   {
     path: '/market_info',
-    component: Market_info
+    name: 'market_info',
+    component(r){
+      r(require('src/components/Market_info'));
+    }
   },
   {
-    path: '/Market_message',
-    component: Market_message
+    path: '/market_info_rate',
+    name: 'market_info_rate',
+    component(r){
+      r(require('src/components/Market_info_rate'));
+    }
   },
   {
-    path: '/Mall_search',
-    component: Mall_search
+    path: '/market_message',
+    name: 'market_message',
+    component(r){
+      r(require('src/components/Market_message'));
+    }
   },
   {
-    path: '/Mall_category',
-    component: Mall_category
+    path: '/mall_search',
+    name: 'mall_search',
+    component(r){
+      r(require('src/components/Mall_search'));
+    }
   },
   {
-    path: '/Mall_info',
-    component: Mall_info
+    path: '/mall_category',
+    name: 'mall_category',
+    component(r){
+      r(require('src/components/Mall_category'));
+    }
   },
   {
-    path: '/Mall_order',
-    component: Mall_order
+    path: '/mall_info',
+    name: 'mall_info',
+    component(r){
+      r(require('src/components/Mall_info'));
+    }
   },
   {
-    path: '/Content_detail',
-    component: Content_detail
+    path: '/mall_order',
+    name: 'mall_order',
+    component(r){
+      r(require('src/components/Mall_order'));
+    }
   },
   {
-    path: '/Person_about_us',
-    component: Person_about_us
+    path: '/content_detail',
+    name: 'content_detail',
+    component(r){
+      r(require('src/components/Content_detail'));
+    }
   },
   {
-    path: '/Person_my_order',
-    component: Person_my_order
+    path: '/person_about_us',
+    name: 'person_about_us',
+    component(r){
+      r(require('src/components/Person_about_us'));
+    }
+  },
+  {
+    path: '/person_my_order',
+    name: 'person_my_order',
+    component(r){
+      r(require('src/components/Person_my_order'));
+    }
+  },
+  {
+    path: '/history_rate',
+    name: 'history_rate',
+    component(r){
+      r(require('src/components/History_rate'));
+    }
+  },
+  {
+    path: '/product_info',
+    name: 'product_info',
+    component(r){
+      r(require('src/components/Product_info'));
+    }
   }
 ]
 export default new VueRouter({

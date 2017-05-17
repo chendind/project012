@@ -130,13 +130,9 @@ export default {
       this.carouselLength = ln
       _l.push(_l[0])
       _l.unshift(_l[ln-1])
-      console.log(_l)
       this.carouselList = _l
       this.$nextTick(()=>{
-        mui.ready(()=>{
-          mui('.mui-slider').slider();
-        })
-
+        mui('.mui-slider').slider();
       })
     })
 	},

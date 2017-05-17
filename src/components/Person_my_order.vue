@@ -8,7 +8,7 @@
             <div class="mui-scroll">
                 <ul class="mui-table-view" style="background-color: #efeff4">
                     <ul v-for="(item,index) in list" :class="(index===0?'mui-table-view mt0':'mui-table-view mt10')">
-                        <li class="mui-table-view-cell" style="font-size: 10px;">
+                        <li class="mui-table-view-cell size12">
                             <span class="color c3">{{item.time | timeFormat}}</span>
                             <span class="mui-pull-right color c3">单号：{{item.code}}</span>
                         </li>
@@ -105,7 +105,7 @@ export default {
         }
     },
     mounted: function () {
-        var self = this;            
+        var self = this;
         mui.init();
         mui.ready(function(){
             mui("#scroll").pullRefresh({
@@ -123,7 +123,7 @@ export default {
                 }
             });
         });
-    }           
+    }
 }
 </script>
 
