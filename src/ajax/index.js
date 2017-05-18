@@ -88,3 +88,7 @@ export const getUser = ()=>{
 export const getCarouselList = ()=>{
   return get('/getCarouselList');
 }
+
+export const getSignature = (url)=>{
+  return post('/wx/jsapi?url=' + url);
+}
