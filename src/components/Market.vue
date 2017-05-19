@@ -1,8 +1,8 @@
 <template>
   <div class="mui-content">
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-      <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket()"></a>
-      <a class="mui-icon iconfont icon-saoyisao mui-pull-right color white mh5" @tap="addMarket()"></a>
+      <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket"></a>
+      <a class="mui-icon iconfont icon-saoyisao mui-pull-right color white mh5" @tap="jumpProductInfo"></a>
       <h1 class="mui-title color white">我的商家</h1>
     </header>
     <div id="scroll" class="mui-content mui-scroll-wrapper">
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import {getMerchantForPage, addFocus} from 'ajax'
+import {getMerchantForPage, addFocus, getSignature} from 'ajax'
+import $ from 'jquery'
 
 export default {
   name: 'market',
@@ -42,6 +43,20 @@ export default {
   //   })
   // },
   methods: {
+      jumpProductInfo:function(){
+        wx.ready(()=>{
+          wx.scanQRCode({
+              needResult: 1, 
+              scanType: ["qrCode"], 
+              success: function (res) {
+                var result = res.resultStr; 
+                // alert(result)
+                let path = `${location.origin+location.pathname}#/Product_into?id=2`;
+                location.href = path;
+              }
+          });
+        });
+      },
       addMarket: function(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
             if (obj.index === 0) {
@@ -87,6 +102,16 @@ export default {
             self.ListStart += self.DATALENGTH;
         })
     }
+  },
+  created(){
+    const url = encodeURIComponent(location.href.split('#')[0]);
+    getSignature(url).then(signature=>{
+      wx.config($.extend(signature,{
+         debug: false, 
+         appId: 'wx886a3b874e4322a4', 
+         jsApiList: ['scanQRCode']
+      }));
+    })
   },
   mounted: function () {
       var self = this;

@@ -56,7 +56,9 @@
         <textarea class="noborder size12 pd10" style="padding-top: 0;margin-bottom: 0;" rows="3" placeholder="晒图＋50字以上评价可以获得100积分哦~"></textarea>
         <div class="pic-box pd10">
           <div class="pics">
-            <div class="pic"></div>
+            <div class="pic">
+              <img v-for="pic in pics" :src="pic">
+            </div>
             <div class="add-button center color c9" @tap="addPic">
               <i class="iconfont icon-xiangji" style="font-size: 18px"></i><br>
               <span style="font-size: 10px" >添加图片</span>
@@ -70,7 +72,7 @@
 
 
 <script>
-import {getMerchant, addMessage, getSignature, getArticleForPage } from 'ajax'
+import {getMerchant, addMessage, getSignature } from 'ajax'
 import $ from 'jquery'
 import router from '../router.js'
 
@@ -79,19 +81,18 @@ export default {
   data(){
     return {
       data: {},
-      message: ''
+      message: '',
+      pics:[]
     }
   },
   methods:{
     addPic(){
+      const self = this;
       wx.ready(()=>{
-        console.log('hehe')
         wx.chooseImage({
-          count: 1, // 默认9
-          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          count: 9, 
           success: function (res) {
-              var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            self.$data.pics=res.localIds;
           }
         });
       })
@@ -101,12 +102,11 @@ export default {
     const url = encodeURIComponent(location.href.split('#')[0]);
     getSignature(url).then(signature=>{
       wx.config($.extend(signature,{
-         debug: true, 
+         debug: false, 
          appId: 'wx886a3b874e4322a4', 
-         jsApiList: ['checkJsApi', 'chooseImage']
+         jsApiList: ['chooseImage']
       }));
     })
- 
   }
 }
 </script>
@@ -115,7 +115,11 @@ export default {
 .pic-box{
   .pics{
     .pic{
+      img{
+        width:80px;
+        height:80px;
 
+      }
     }
     .add-button{
       width: 54px;
