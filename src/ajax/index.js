@@ -92,3 +92,7 @@ export const getCarouselList = ()=>{
 export const getSignature = (url)=>{
   return post('/wx/jsapi?url=' + url);
 }
+
+export const evaluateProduct = (model_id,env,attitude,after_sale,text,photos)=>{
+  return post('/evaluation/add'+`?model_id=${model_id}&environment=${env}&attitude=${attitude}&after_sale=${after_sale}&text=${text}&photo=${photos}`);
+}

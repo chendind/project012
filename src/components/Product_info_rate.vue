@@ -2,7 +2,7 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <router-link :to="{path: '/market_info', query: {id: $route.query.id}}" class="mui-icon iconfont icon-zuo1 color white icon-sm"></router-link>
-      <h1 class="mui-title color white">店名</h1>
+      <h1 class="mui-title color white">商品名</h1>
     </header>
     <div class="mui-content">
       <div class="rate-bar-box bg white">
@@ -76,7 +76,7 @@ import {getMerchant, addMessage, getSignature } from 'ajax'
 import router from '../router.js'
 
 export default {
-  name: 'Market_message',
+  name: 'Product_info_rate',
   data(){
     return {
       data: {},

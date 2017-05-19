@@ -2,13 +2,13 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <a href="#/" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
-      <h1 class="mui-title color white">dd</h1>
+      <h1 class="mui-title color white">dd1bh </h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
       <!-- <router-link class="mui-tab-item color white" :to="{path: '/market_message', query: {id: $route.query.id}}">
          留言
       </router-link> -->
-      <router-link class="mui-tab-item color white" :to="{path: '/market_info_rate', query: {id: $route.query.id}}" v-tap>
+      <router-link class="mui-tab-item color white" :to="{path: '/product_info_rate', query: {id: $route.query.id}}" v-tap>
         评价
       </router-link>
     </nav>

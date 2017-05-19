@@ -24,7 +24,6 @@
 
 <script>
 import {getMerchantForPage, addFocus, getSignature} from 'ajax'
-import $ from 'jquery'
 
 export default {
   name: 'market',
@@ -49,9 +48,7 @@ export default {
               needResult: 1, 
               scanType: ["qrCode"], 
               success: function (res) {
-                var result = res.resultStr; 
-                // alert(result)
-                let path = `${location.origin+location.pathname}#/Product_into?id=2`;
+                var path = res.resultStr; 
                 location.href = path;
               }
           });

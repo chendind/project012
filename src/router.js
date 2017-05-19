@@ -126,6 +126,13 @@ const routes = [
     component(r){
       r(require('src/components/Product_info'));
     }
+  },
+  {
+    path: '/product_info_rate',
+    name: 'product_info_rate',
+    component(r){
+      r(require('src/components/Product_info_rate'));
+    }
   }
 ]
 export default new VueRouter({
