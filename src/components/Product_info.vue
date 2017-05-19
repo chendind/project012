@@ -2,7 +2,7 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <a href="#/" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
-      <h1 class="mui-title color white">dd1bh </h1>
+      <h1 class="mui-title color white">dd 11</h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
       <!-- <router-link class="mui-tab-item color white" :to="{path: '/market_message', query: {id: $route.query.id}}">
