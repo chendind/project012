@@ -96,3 +96,14 @@ export const getSignature = (url)=>{
 export const evaluateProduct = (model_id,env,attitude,after_sale,text,photos)=>{
   return post('/evaluation/add'+`?model_id=${model_id}&environment=${env}&attitude=${attitude}&after_sale=${after_sale}&text=${text}&photo=${photos}`);
 }
+
+export const getProductInfo = id=>{
+  return post('/goods/get?id='+id);
+}
+
+export const getEvaluations = (evaluationModel_id)=>{
+  return post(`/evaluation/get?evaluationModel_id=${evaluationModel_id}&start=0&rows=100&orders=true`)
+}
+
+
+

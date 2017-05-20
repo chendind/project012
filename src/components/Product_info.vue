@@ -2,7 +2,7 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <a href="#/" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
-      <h1 class="mui-title color white">dd 11</h1>
+      <h1 class="mui-title color white">{{data.name}}</h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
       <!-- <router-link class="mui-tab-item color white" :to="{path: '/market_message', query: {id: $route.query.id}}">
@@ -13,21 +13,33 @@
       </router-link>
     </nav>
     <div class="mui-content">
-        <div class="fixBox1" :style="'background-image: url('+img+')'"></div>
+        <div class="fixBox1" :style="'background-image: url('+data.photo+')'"></div>
         <div class="mui-card-content bg white">
             <div class="mui-card-content-inner">
-              <p class="mui-h5 color c3">dd</p>
+              <p class="mui-h5 color c3">{{data.name}}</p>
               <div>
-                <span class="color maincolor">材质：尼龙</span>
-                <span class="mui-pull-right">生产厂家：杭州原产地</span>
+                <span class="color maincolor">材质：{{data.material}}</span>
+                <span class="mui-pull-right">生产厂家：{{data.factory}}</span>
               </div>
             </div>
         </div>
         <div class="mui-card-content bg white mt10">
             <div class="mui-card-content-inner color c6">
                 <p class="mui-h5 color c3">详细介绍</p>
-                <div v-html="data.introduction">
-
+                <div v-html="data.detail">
+                  {{data.detail}}
+                </div>
+            </div>
+        </div>
+        <div class="mui-card-content bg white mt10">
+            <div class="mui-card-content-inner color c6">
+                <p class="mui-h5 color c3">历史评价</p>
+                <div class="eval-section" v-for="eval in evals">
+                  <img class="user-avatar" :src="eval.userAvatar">
+                  <span class="user-name">{{eval.userName}}</span>
+                  <span class="rate">4.7</span>
+                  <p class="eval-content">{{eval.content}}</p>
+                  <img class="eval-pic" v-for="img in eval.imgs" :src="img"> 
                 </div>
             </div>
         </div>
@@ -35,24 +47,98 @@
   </div>
 </template>
 <script>
+import { getProductInfo, getEvaluations } from 'ajax';
+// import { XButton } from 'vux';
 export default {
   name: 'product_info',
   data() {
     return {
       data: {
-        introduction: '111',
-        img: "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-      }
+        // introduction: '111',
+        // img: "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      },
+      evals:[
+        {
+          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          userName:'mmm3',
+          content:'很好很好很好',
+          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+          ]
+        },
+        {
+          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          userName:'mmm3',
+          content:'很好很好很好',
+          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+          ]
+        },
+        {
+          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          userName:'mmm3',
+          content:'很好很好很好',
+          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+          ]
+        },
+      ],
+      evaluationModelId:''
+
     }
   },
   methods: {
 
   },
-  mounted() {
-
+  created() {
+    getProductInfo(16).then(data=>{
+      console.log(data)
+      const evalId = data.data.evaluationModel.id;
+      this.$data.data=data.data;
+      this.$data.data.factory = data.factory.name;
+      this.$data.evaluationModelId=evalId;
+      getEvaluations(evalId).done(data=>{
+          this.$data.data.evals = data.data;
+      })
+      
+    })
   }
 }
 </script>
 <style lang='less' scoped>
+.user-avatar{
+  border-radius: 50%;
+  width:35px;
+  height:35px;
+}
 
+.eval-section{
+  margin-bottom: 10px;
+  color:rgb(102,102,102);
+}
+
+.user-name{
+  vertical-align: top;
+  position: relative;
+  top: 7px;
+  left: 7px;
+}
+
+.rate{
+  float:right;
+  color:rgb(240,36,0);
+}
+
+.eval-content{
+  color:rgb(102,102,102);
+}
+
+.eval-pic{
+  width:60px;
+  height:60px;
+  margin-right: 10px;
+}
 </style>

@@ -59,6 +59,7 @@ export default {
     },
     beforeRouteEnter(to, from, next){
       getMerchant(to.query.id).then((res)=>{
+        console.log(res)
         next($vm => {
           $vm.data = res
         })
