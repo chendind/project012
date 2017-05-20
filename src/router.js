@@ -10,7 +10,6 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'market',
         redirect: '/market'
       },
       {

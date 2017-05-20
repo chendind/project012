@@ -34,12 +34,12 @@
         <div class="mui-card-content bg white mt10">
             <div class="mui-card-content-inner color c6">
                 <p class="mui-h5 color c3">历史评价</p>
-                <div class="eval-section" v-for="eval in evals">
+                <div class="eval-section" v-for="(eval, $index) in evals">
                   <img class="user-avatar" :src="eval.userAvatar">
                   <span class="user-name">{{eval.userName}}</span>
                   <span class="rate">4.7</span>
                   <p class="eval-content">{{eval.content}}</p>
-                  <img class="eval-pic" v-for="img in eval.imgs" :src="img"> 
+                  <img class="eval-pic" v-for="img in eval.imgs" :src="img" data-preview-src="" :data-preview-group="$index">
                 </div>
             </div>
         </div>
@@ -48,7 +48,6 @@
 </template>
 <script>
 import { getProductInfo, getEvaluations } from 'ajax';
-// import { XButton } from 'vux';
 export default {
   name: 'product_info',
   data() {
@@ -100,10 +99,13 @@ export default {
       this.$data.data=data.data;
       this.$data.data.factory = data.factory.name;
       this.$data.evaluationModelId=evalId;
-      getEvaluations(evalId).done(data=>{
+      getEvaluations(evalId).then(data=>{
           this.$data.data.evals = data.data;
+          this.$nextTick(() => {
+            mui.previewImage();
+          })
       })
-      
+
     })
   }
 }
@@ -141,4 +143,5 @@ export default {
   height:60px;
   margin-right: 10px;
 }
+
 </style>

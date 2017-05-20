@@ -14,8 +14,7 @@
     "lodash.throttle": "^4.1.1",
     "v-tap": "^3.0.1",
     "vue": "^2.1.0",
-    "vue-router": "^2.1.1",
-    "vux": "^2.3.1"
+    "vue-router": "^2.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
