@@ -50,13 +50,6 @@ const routes = [
     }
   },
   {
-    path: '/market_info_rate',
-    name: 'market_info_rate',
-    component(r){
-      r(require('src/components/Market_info_rate'));
-    }
-  },
-  {
     path: '/market_message',
     name: 'market_message',
     component(r){
@@ -127,10 +120,10 @@ const routes = [
     }
   },
   {
-    path: '/product_info_rate',
-    name: 'product_info_rate',
+    path: '/rate',
+    name: 'rate',
     component(r){
-      r(require('src/components/Product_info_rate'));
+      r(require('src/components/Rate'));
     }
   }
 ]

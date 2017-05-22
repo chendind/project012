@@ -8,7 +8,7 @@
       <!-- <router-link class="mui-tab-item color white" :to="{path: '/market_message', query: {id: $route.query.id}}">
          留言
       </router-link> -->
-      <router-link class="mui-tab-item color white" :to="{path: '/market_info_rate', query: {id: $route.query.id}}" v-tap>
+      <router-link class="mui-tab-item color white" :to="{path: '/rate', query: {id: evalId, type: 'market', name: data.name}}" v-tap>
         评价
       </router-link>
     </nav>
@@ -34,16 +34,20 @@
             </div>
         </div>
         <div class="mui-card-content bg white mt10">
-            <div class="mui-card-content-inner color c6">
-                <p class="mui-h5 color c3">历史评价</p>
-                <div class="eval-section" v-for="(eval, $index) in evals">
-                  <img class="user-avatar" :src="eval.user.img">
-                  <span class="user-name">{{eval.user.nickname}}</span>
-                  <span class="rate">{{((eval.after_sale+eval.attitude+eval.environment)/3).toFixed(1)}}</span>
-                  <p class="eval-content">{{eval.text}}</p>
-                  <img class="eval-pic" v-for="img in eval.photo" :src="img" data-preview-src="" :data-preview-group="$index">
-                </div>
+          <div class="mui-card-content-inner color c6">
+            <div class="mui-h5 color c3">历史评价</div>
+          </div>
+          <div class="eval-box">
+            <div class="eval-section" v-for="(eval, $index) in evals">
+              <img class="user-avatar" :src="eval.user.img">
+              <span class="user-name">{{eval.user.nickname}}</span>
+              <span class="rate">{{((eval.after_sale+eval.attitude+eval.environment)/3).toFixed(1)}}</span>
+              <p class="eval-content">{{eval.text}}</p>
+              <div class="after">
+                <img class="eval-pic" v-for="img in eval.photo" :src="img" data-preview-src="" :data-preview-group="$index">
+              </div>
             </div>
+          </div>
         </div>
     </div>
     <a :href="'tel:'+data.phone" style="display: none;" id="telphoneTag"></a>
@@ -67,25 +71,22 @@ export default {
     		data: {
           phone: '',
         },
-        evals:[]
+        evals:[],
+        evalId: 0,
     	}
     },
     beforeRouteEnter(to, from, next){
       getMerchant(to.query.id).then((res)=>{
-        console.log(res)
         next($vm => {
           $vm.data = res;
-          // $vm.evalId = res.evaluationModel.id;
-          getEvaluations(23).then(data=>{
+          $vm.evalId = res.evaluationModel.id;
+          getEvaluations($vm.evalId).then(data=>{
               $vm.evals = data.data;
-              // this.$nextTick(() => {
-                // mui.previewImage();
-              // })
           },msg=>{
             console.log(msg)
           })
         });
-       
+
       })
     }
 }
@@ -99,8 +100,21 @@ export default {
 }
 
 .eval-section{
-  margin-bottom: 10px;
+  position: relative;
+  padding: 10px 15px;
   color:rgb(102,102,102);
+  overflow: hidden;
+  &:after{
+    position: absolute;
+    display: block;
+    content: '';
+    height: 0px;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .user-name{
@@ -123,6 +137,9 @@ export default {
   width:60px;
   height:60px;
   margin-right: 10px;
+  margin-bottom: 10px;
+  display: block;
+  float: left;
 }
 
 </style>

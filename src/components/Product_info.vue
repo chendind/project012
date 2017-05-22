@@ -8,7 +8,7 @@
       <!-- <router-link class="mui-tab-item color white" :to="{path: '/market_message', query: {id: $route.query.id}}">
          留言
       </router-link> -->
-      <router-link class="mui-tab-item color white" :to="{path: '/product_info_rate', query: {id: $route.query.id}}" v-tap>
+      <router-link class="mui-tab-item color white" :to="{path: '/rate', query: {id: evalId, type:'product', name: data.name}}" v-tap>
         评价
       </router-link>
     </nav>
@@ -18,8 +18,12 @@
             <div class="mui-card-content-inner">
               <p class="mui-h5 color c3">{{data.name}}</p>
               <div>
-                <span class="color maincolor">材质：{{data.material}}</span>
-                <span class="mui-pull-right">生产厂家：{{data.factory}}</span>
+                <table style="width: 100%;">
+                  <tr>
+                    <td class="color maincolor">材质：{{data.material}}</td>
+                    <td class="mui-text-right">生产厂家：{{data.factory}}</td>
+                  </tr>
+                </table>
               </div>
             </div>
         </div>
@@ -32,16 +36,20 @@
             </div>
         </div>
         <div class="mui-card-content bg white mt10">
-            <div class="mui-card-content-inner color c6">
-                <p class="mui-h5 color c3">历史评价</p>
-                <div class="eval-section" v-for="(eval, $index) in evals">
-                  <img class="user-avatar" :src="eval.user.img">
-                  <span class="user-name">{{eval.user.nickname}}</span>
-                  <span class="rate">{{((eval.after_sale+eval.attitude+eval.environment)/3).toFixed(1)}}</span>
-                  <p class="eval-content">{{eval.text}}</p>
-                  <img class="eval-pic" v-for="img in eval.photo" :src="img" data-preview-src="" :data-preview-group="$index">
-                </div>
+          <div class="mui-card-content-inner color c6">
+            <div class="mui-h5 color c3">历史评价</div>
+          </div>
+          <div class="eval-box">
+            <div class="eval-section" v-for="(eval, $index) in evals">
+              <img class="user-avatar" :src="eval.user.img">
+              <span class="user-name">{{eval.user.nickname}}</span>
+              <span class="rate">{{((eval.after_sale+eval.attitude+eval.environment)/3).toFixed(1)}}</span>
+              <p class="eval-content">{{eval.text}}</p>
+              <div class="after">
+                <img class="eval-pic" v-for="img in eval.photo" :src="img" data-preview-src="" :data-preview-group="$index">
+              </div>
             </div>
+          </div>
         </div>
     </div>
   </div>
@@ -53,61 +61,34 @@ export default {
   data() {
     return {
       data: {
-        // introduction: '111',
-        // img: "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
       },
       evals:[],
-      // evals:[
-      //   {
-      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     userName:'mmm3',
-      //     content:'很好很好很好',
-      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-      //     ]
-      //   },
-      //   {
-      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     userName:'mmm3',
-      //     content:'很好很好很好',
-      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-      //     ]
-      //   },
-      //   {
-      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     userName:'mmm3',
-      //     content:'很好很好很好',
-      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-      //     ]
-      //   },
-      // ],
-
+      evalId: 0,
     }
   },
   methods: {
 
   },
-  created() {
-    getProductInfo(16).then(data=>{
-      const evalId = data.data.evaluationModel.id;
-      localStorage.setItem('evalId',evalId);
-      localStorage.setItem('productName',data.data.name);
-      this.$data.data=data.data;
-      this.$data.data.factory = data.factory.name;
-      console.log(evalId)
-      getEvaluations(evalId).then(data=>{;
+  mounted() {
+    const productId = this.$route.query.id
+    getProductInfo(productId).then(data=>{
+      if (data.state == 0) {
+        const evalId = data.data.evaluationModel.id;
+        this.evalId = evalId;
+        this.$data.data=data.data;
+        this.$data.data.factory = data.factory.name;
+        getEvaluations(evalId).then(data=>{;
           this.$data.evals = data.data;
-          console.log(data.data)
           this.$nextTick(() => {
             mui.previewImage();
           })
-      })
+        })
+      } else {
+        mui.alert('参数错误',undefined,undefined,() => {
+          this.$router.replace('/');
+        })
 
+      }
     })
   }
 }
@@ -120,8 +101,21 @@ export default {
 }
 
 .eval-section{
-  margin-bottom: 10px;
+  position: relative;
+  padding: 10px 15px;
   color:rgb(102,102,102);
+  overflow: hidden;
+  &:after{
+    position: absolute;
+    display: block;
+    content: '';
+    height: 0px;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .user-name{
@@ -144,6 +138,9 @@ export default {
   width:60px;
   height:60px;
   margin-right: 10px;
+  margin-bottom: 10px;
+  display: block;
+  float: left;
 }
 
 </style>

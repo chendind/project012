@@ -6,15 +6,17 @@ const factory = (ajax_) => (url) => {
     ajax = $.post
 
   return Promise.resolve(ajax('http://tongzhuang.moovi-tech.com' + url)).then((res)=>{
-    if (res.state == 0 || res.state === undefined) {
-      return Promise.resolve(res)
-    }
-    else if (res.state == 10011){
+
+    if (res.state == 10011){
       window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx886a3b874e4322a4&redirect_uri=http%3a%2f%2ftongzhuang.moovi-tech.com%2flogin.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
     }
-    else {
-      return Promise.reject(new Error(res.detail))
-    }
+    return Promise.resolve(res)
+    // if (res.state == 0 || res.state === undefined) {
+
+    // }
+    // else {
+    //   return Promise.reject(new Error(res.detail))
+    // }
   }).catch((e)=>{
     return Promise.reject(e)
   })

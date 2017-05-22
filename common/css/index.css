@@ -169,6 +169,9 @@
 .noborder {
   border: none;
 }
+#tlbstoolbar {
+  display: none !important;
+}
 .mui-preview-image.mui-fullscreen {
   position: fixed;
   z-index: 20;

@@ -42,9 +42,9 @@ export default {
 		}
 	},
 	methods: {
-		back: function () {
-        	history.back();
-        }
+		back() {
+    	history.back();
+    }
 	},
   beforeRouteEnter(to, from, next){
     getProduct(to.query.id).then((res)=>{
