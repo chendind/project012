@@ -2,7 +2,7 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <router-link :to="{path: '/market_info', query: {id: $route.query.id}}" class="mui-icon iconfont icon-zuo1 color white icon-sm"></router-link>
-      <h1 class="mui-title color white">{{productName}}</h1>
+      <h1 class="mui-title color white">{{productName}}1</h1>
     </header>
     <div class="mui-content">
       <div class="rate-bar-box bg white">
@@ -61,6 +61,8 @@
               <div class="add-button center color" @tap="addPic">
                 <i class="iconfont icon-xiangji" style="font-size: 18px"></i><br>
                 <span style="font-size: 10px" >添加图片</span>
+                        选择文件:<input type="file" id="file1" /><br />
+                        <input @click="submit" type="submit" value="上传" />
               </div>
             </div>
           </div>
@@ -70,7 +72,6 @@
     <button @click="uploadEval" class="submit">提交</button>
   </div>
 </template>
-
 
 <script>
 import {getMerchant, addMessage, getSignature, evaluateProduct, uploadImage } from 'ajax'
@@ -140,7 +141,40 @@ export default {
       });
       return picStr;
     },
+    submit(){
+      let formData= new FormData();
+      const imgData=document.getElementById("file1").files[0]
+      console.log('hehe')
+      formData.append('file',imgData)
+      formData.append('type',1)
+      uploadImage(formData).then(data=>{
+        alert(data)
+      })
+    },
     uploadEval(){
+
+      // console.log('hehe')
+      // let imgData;
+      // this.getBase64FromImageUrl('http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg',function(data){
+      //   imgData = data;
+      //   console.log(imgData)
+      //   var formData= new FormData();
+      //   formData.append('file',imgData)
+      //   formData.append('type',1)
+      //   // for (var pair of formData.entries()) {
+      //   //     console.log(pair[0]+ ', ' + pair[1]); 
+      //   // }
+      //   uploadImage(formData).then(data=>{
+      //     console.log(data)
+      //   })
+      let formData= new FormData();
+      const imgData=document.getElementById("file1").files[0]
+      console.log('hehe')
+      formData.append('file',imgData)
+      formData.append('type',1)
+      uploadImage(formData).then(data=>{
+        alert(data)
+      })
       const quality = this.$data.quality;
       const style = this.$data.style;
       const price = this.$data.price;
@@ -208,23 +242,23 @@ export default {
 
   },
   created(){
-    console.log('hehe')
-    let imgData;
-    this.getBase64FromImageUrl('http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg',function(data){
-      // console.log(data)
-      imgData = data;
-      console.log(imgData)
-      var formData= new FormData();
-      formData.append('file',imgData)
-      formData.append('type',1)
-      // for (var pair of formData.entries()) {
-      //     console.log(pair[0]+ ', ' + pair[1]); 
-      // }
-      uploadImage(formData).then(data=>{
-        console.log(data)
-      })
-    })
-    console
+    // console.log('hehe')
+    // let imgData;
+    // this.getBase64FromImageUrl('http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg',function(data){
+    //   // console.log(data)
+    //   imgData = data;
+    //   // console.log(imgData)
+    //   var formData= new FormData();
+    //   formData.append('file',imgData)
+    //   formData.append('type',1)
+    //   // for (var pair of formData.entries()) {
+    //   //     console.log(pair[0]+ ', ' + pair[1]); 
+    //   // }
+    //   uploadImage(formData).then(data=>{
+    //     console.log(data)
+    //   })
+    // })
+    // console
     
   
    
