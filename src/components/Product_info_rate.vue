@@ -2,7 +2,7 @@
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <router-link :to="{path: '/market_info', query: {id: $route.query.id}}" class="mui-icon iconfont icon-zuo1 color white icon-sm"></router-link>
-      <h1 class="mui-title color white">商品名</h1>
+      <h1 class="mui-title color white">{{productName}}</h1>
     </header>
     <div class="mui-content">
       <div class="rate-bar-box bg white">
@@ -56,8 +56,8 @@
         <textarea v-model="evalText" class="noborder size12 pd10" style="padding-top: 0;margin-bottom: 0;" rows="3" placeholder="晒图＋50字以上评价可以获得100积分哦~"></textarea>
         <div class="pic-box pd10">
           <div class="pics">
-            <div class="pic">
-              <img v-for="pic in pics" :src="pic">
+            <div class="pic" id="pic">
+              <img v-for="pic in localIds" :src="pic">
               <div class="add-button center color" @tap="addPic">
                 <i class="iconfont icon-xiangji" style="font-size: 18px"></i><br>
                 <span style="font-size: 10px" >添加图片</span>
@@ -73,7 +73,7 @@
 
 
 <script>
-import {getMerchant, addMessage, getSignature, evaluateProduct } from 'ajax'
+import {getMerchant, addMessage, getSignature, evaluateProduct, uploadImage } from 'ajax'
 import router from '../router.js'
 
 export default {
@@ -84,14 +84,16 @@ export default {
       style:4,
       price:4,
       evalText: '',
-      pics:[],
-      // pics:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-      // ]
+      productName:'',
+      // localIds:[],
+      imgData:[],
+      localIds:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      ]
     }
   },
   methods:{
@@ -110,34 +112,123 @@ export default {
         wx.chooseImage({
           count: 9, 
           success: function (res) {
-            self.$data.pics=[...self.$data.pics,...res.localIds];
+            self.$data.localIds=[...self.$data.localIds,...res.localIds];
+            for(let localId of res.localIds){
+              alert(localId)
+              wx.getLocalImgData({
+                localId:localId,
+                success:function(res){
+                  alert('hehe')
+                  alert(res.localData)
+                  this.imgData.push(res.localData);
+                },
+                error:function(error){
+                  alert('hehe2')
+                  alert(error)
+                }
+              })
+            };
           }
         });
-      })
+      });
+
     },
     picFormat(pics){
       let picStr = '';
       pics.forEach(pic=>{
-        picStr+='&'+pic;
+        picStr+='&photo='+pic;
       });
+      return picStr;
     },
     uploadEval(){
       const quality = this.$data.quality;
       const style = this.$data.style;
       const price = this.$data.price;
       const evalText = this.$data.evalText;
-      const photos = this.picFormat(this.$data.pics);
-      const id = this.$route.query.id;
-      console.log(this.$data)
-      evaluateProduct(id,quality,style,price,evalText,photos).then(msg=>{
-          console.log(msg);
+      // const photos = this.picFormat(this.$data.pics);
+      const evalId = localStorage.getItem('evalId');
+      // uploadFile(this.$data.imgData[0]).then(data=>{
+      //   alert(data)
+      // })
+      // const photos = ["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"];
+      evaluateProduct(evalId,quality,style,price,evalText,).then(msg=>{
+          // alert(msg.id)
+          console.log(msg)
+          // this.$router.go(-1);
         },error=>{
-          console.log(error);
+          // alert(error)
+          // console.log(error);
         }
       )
-    }
+    },
+   getBase64FromImageUrl(url,callback) {
+       var img = new Image();
+
+       img.setAttribute('crossOrigin', 'anonymous');
+
+       img.onload = function () {
+           var canvas = document.createElement("canvas");
+           canvas.width =this.width;
+           canvas.height =this.height;
+
+           var ctx = canvas.getContext("2d");
+           ctx.drawImage(this, 0, 0);
+
+           var dataURL = canvas.toDataURL("image/png");
+          console.log('onload')
+           callback(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+       };
+       img.src = url;
+   },
+
+  },
+  mounted(){
+    // console.log('hehe')
+    // let imgData;
+    // this.getBase64FromImageUrl('http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg',function(data){
+    //   imgData = data;
+    //   console.log(imgData)
+    //   var formData= new FormData();
+    //   formData.append('file',imgData)
+    //   formData.append('type',1)
+    //   // for (var pair of formData.entries()) {
+    //   //     console.log(pair[0]+ ', ' + pair[1]); 
+    //   // }
+    //   uploadImage(formData).then(data=>{
+    //     console.log(data)
+    //   })
+    // })
+    
+    // let formData = new FormData();
+    // formData.append('type',1);
+    // formData.append('file','hehe');
+    // uploadImage(formData).then(data=>{
+    //   console.log(data)
+    // })
+
   },
   created(){
+    console.log('hehe')
+    let imgData;
+    this.getBase64FromImageUrl('http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg',function(data){
+      // console.log(data)
+      imgData = data;
+      console.log(imgData)
+      var formData= new FormData();
+      formData.append('file',imgData)
+      formData.append('type',1)
+      // for (var pair of formData.entries()) {
+      //     console.log(pair[0]+ ', ' + pair[1]); 
+      // }
+      uploadImage(formData).then(data=>{
+        console.log(data)
+      })
+    })
+    console
+    
+  
+   
+    this.$data.productName = localStorage.getItem('productName');
     const url = encodeURIComponent(location.href.split('#')[0]);
     getSignature(url).then(signature=>{
       wx.config($.extend(signature,{
@@ -187,9 +278,13 @@ export default {
   border-radius: 0;
   background-color: rgb(68,191,255);
   color: white;
-  height: 44px;
+  height: 50px;
   font-size: 17px;
   border:0!important;
+}
+
+.submit:active{
+  background-color: rgb(68,191,255);
 }
 </style>
 

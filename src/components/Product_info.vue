@@ -35,11 +35,11 @@
             <div class="mui-card-content-inner color c6">
                 <p class="mui-h5 color c3">历史评价</p>
                 <div class="eval-section" v-for="(eval, $index) in evals">
-                  <img class="user-avatar" :src="eval.userAvatar">
-                  <span class="user-name">{{eval.userName}}</span>
-                  <span class="rate">4.7</span>
-                  <p class="eval-content">{{eval.content}}</p>
-                  <img class="eval-pic" v-for="img in eval.imgs" :src="img" data-preview-src="" :data-preview-group="$index">
+                  <img class="user-avatar" :src="eval.user.img">
+                  <span class="user-name">{{eval.user.nickname}}</span>
+                  <span class="rate">{{((eval.after_sale+eval.attitude+eval.environment)/3).toFixed(1)}}</span>
+                  <p class="eval-content">{{eval.text}}</p>
+                  <img class="eval-pic" v-for="img in eval.photo" :src="img" data-preview-src="" :data-preview-group="$index">
                 </div>
             </div>
         </div>
@@ -56,36 +56,36 @@ export default {
         // introduction: '111',
         // img: "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
       },
-      evals:[
-        {
-          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          userName:'mmm3',
-          content:'很好很好很好',
-          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-          ]
-        },
-        {
-          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          userName:'mmm3',
-          content:'很好很好很好',
-          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-          ]
-        },
-        {
-          userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          userName:'mmm3',
-          content:'很好很好很好',
-          imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
-          "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
-          ]
-        },
-      ],
-      evaluationModelId:''
+      evals:[],
+      // evals:[
+      //   {
+      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     userName:'mmm3',
+      //     content:'很好很好很好',
+      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+      //     ]
+      //   },
+      //   {
+      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     userName:'mmm3',
+      //     content:'很好很好很好',
+      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+      //     ]
+      //   },
+      //   {
+      //     userAvatar:"http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     userName:'mmm3',
+      //     content:'很好很好很好',
+      //     imgs:["http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg",
+      //     "http://tongzhuang.moovi-tech.com/uploads/img/edae45d41478436997a34bd9c9affe55.jpg"
+      //     ]
+      //   },
+      // ],
 
     }
   },
@@ -94,13 +94,15 @@ export default {
   },
   created() {
     getProductInfo(16).then(data=>{
-      console.log(data)
       const evalId = data.data.evaluationModel.id;
+      localStorage.setItem('evalId',evalId);
+      localStorage.setItem('productName',data.data.name);
       this.$data.data=data.data;
       this.$data.data.factory = data.factory.name;
-      this.$data.evaluationModelId=evalId;
-      getEvaluations(evalId).then(data=>{
-          this.$data.data.evals = data.data;
+      console.log(evalId)
+      getEvaluations(evalId).then(data=>{;
+          this.$data.evals = data.data;
+          console.log(data.data)
           this.$nextTick(() => {
             mui.previewImage();
           })
