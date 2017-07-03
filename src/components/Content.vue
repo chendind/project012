@@ -23,7 +23,7 @@ export default {
 	data: function () {
   	return {
       list: [],
-      DATALENGTH: 5,
+      DATALENGTH: 20,
       ListStart: 0
     }
   },
@@ -67,7 +67,7 @@ export default {
     }
   },
   mounted: function () {
-      var self = this;            
+      var self = this;
       mui.init();
       mui.ready(function(){
           mui("#scroll").pullRefresh({
@@ -78,14 +78,14 @@ export default {
               },
               up: {
                   auto: true,
-                  contentnomore: '没有更多消息了',
+                  contentnomore: '',
                   callback : function(){
                       self.getMore();
                   }
               }
           });
       });
-  } 
+  }
 }
 </script>
 

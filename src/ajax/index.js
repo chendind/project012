@@ -120,3 +120,29 @@ export const uploadImage = (fd)=>{
   });
 }
 
+export const getMyEvluation = (start, row) => {
+  return post(`/evaluation/myEvaluation?start=${start}&rows=${row}&orders=true`)
+}
+export const sendCode = (phone) => {
+  return post(`/user/phoneCode?phone=${phone}`)
+}
+export const regist = (phone, code, password) => {
+  return post(`/user/reg?phone=${phone}&code=${code}&password=${password}`)
+}
+export const passwordLogin = (phone, password) => {
+  return post(`/user/login?phone=${phone}&password=${password}`)
+}
+export const resetPassword = (phone, code, password) => {
+  return post(`/user/resetPassword?phone=${phone}&code=${code}&password=${password}`)
+}
+
+
+
+
+
+
+
+
+
+
+

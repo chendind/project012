@@ -11,7 +11,7 @@
           <ul class="mui-table-view mt0" v-for="i in list">
             <li class="mui-table-view-cell mui-media">
               <router-link class="mui-navigate-right" :to="{path: '/market_info', query: {id: i.id}}" v-tap>
-                <img class="mui-media-object middle border circle" :src="i.headImg">
+                <img class="mui-media-object middle border circle" :src="i.headImg" style="width: 42px;">
                 {{i.name}}
               </router-link>
             </li>
@@ -30,7 +30,7 @@ export default {
   data: function(){
     return {
       list: [],
-      DATALENGTH: 5,
+      DATALENGTH: 20,
       ListStart: 0
     }
   },
@@ -43,16 +43,24 @@ export default {
   // },
   methods: {
       jumpProductInfo:function(){
-        wx.ready(()=>{
+        // wx.ready(()=>{
           wx.scanQRCode({
               needResult: 1,
               scanType: ["qrCode"],
-              success: function (res) {
-                var path = res.resultStr;
-                location.href = path;
+              success(res) {
+                const result = JSON.parse(res.resultStr);
+                if (result.type === 'business') {
+                  addFocus(result.code).then((data)=>{
+                    location.href = result.url;
+                  }).catch((e)=>{
+                    location.href = result.url;
+                  })
+                } else if (result.type === 'product') {
+                  location.href = result.url;
+                }
               }
           });
-        });
+        // });
       },
       addMarket: function(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
@@ -122,7 +130,7 @@ export default {
               },
               up: {
                   auto: true,
-                  contentnomore: '没有更多消息了',
+                  contentnomore: '',
                   callback : function(){
                       self.getMore();
                   }

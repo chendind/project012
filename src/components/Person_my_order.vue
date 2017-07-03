@@ -23,7 +23,7 @@
                         </li>
                         <li class="mui-table-view-cell">
                             <span>
-                                <button type="button" class="mui-btn mui-btn-outlined mui-pull-right color c9" style="padding:3px 12px;">
+                                <button type="button" class="mui-btn mui-btn-outlined mui-active mui-pull-right color c9" style="padding:3px 12px;">
                                     {{item.state}}
                                 </button>
                             </span>
@@ -37,7 +37,7 @@
 
 
 <script>
-var imgurl = require("../../static/source/images/WechatIMG163.png");
+var imgurl = require("assets/images/WechatIMG163.png");
 
 import {getOrderForPage_User} from 'ajax'
 
@@ -132,6 +132,12 @@ export default {
     max-width: 88px;
     width: 88px;
     height: 70px !important;
+}
+.mui-table-view-cell.mui-active{
+  background-color: transparent;
+}
+.mui-btn.mui-active{
+  background-color: transparent;
 }
 </style>
 

@@ -28,7 +28,7 @@ module.exports = {
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components'),
       'static': path.resolve(__dirname, '../static'),
-      'images': path.resolve(__dirname, '../static/source/images'),
+      // 'images': path.resolve(__dirname, '../static/source/images'),
       'ajax': path.resolve(__dirname, '../src/ajax')
     }
   },

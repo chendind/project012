@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-      <a href="#/" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
+      <a @click="back" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
       <h1 class="mui-title color white">{{data.name}}</h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
@@ -67,7 +67,9 @@ export default {
     }
   },
   methods: {
-
+    back(){
+      history.back();
+    },
   },
   mounted() {
     const productId = this.$route.query.id
@@ -87,7 +89,6 @@ export default {
         mui.alert('参数错误',undefined,undefined,() => {
           this.$router.replace('/');
         })
-
       }
     })
   }

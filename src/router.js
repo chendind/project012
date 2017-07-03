@@ -43,6 +43,27 @@ const routes = [
     ]
   },
   {
+    path: '/app_login',
+    name: 'app_login',
+    component(r){
+      r(require('src/components/App_login'));
+    }
+  },
+  {
+    path: '/app_regist',
+    name: 'app_regist',
+    component(r){
+      r(require('src/components/App_regist'));
+    }
+  },
+  {
+    path: '/app_findPassword',
+    name: 'app_findPassword',
+    component(r){
+      r(require('src/components/App_findPassword'));
+    }
+  },
+  {
     path: '/market_info',
     name: 'market_info',
     component(r){

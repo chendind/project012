@@ -112,7 +112,7 @@
 
 
 <script>
-var imgurl = require("../../static/source/images/mobile.png");
+var imgurl = require("assets/images/mobile.png");
 import {getProductForPage,getCarouselList,getRecommendProduct } from 'ajax'
 export default {
 	name: 'mall',
@@ -124,7 +124,7 @@ export default {
         _l = res.list
       }
       else{
-        _l = [require('images/mask1.jpg')]
+        _l = [require('assets/images/mask1.jpg')]
       }
       let ln = _l.length
       this.carouselLength = ln

@@ -33,7 +33,7 @@ export default {
   data(){
     return {
       list: [],
-      DATALENGTH: 5,
+      DATALENGTH: 20,
       ListStart: 0,
       type: ""
     }
@@ -76,8 +76,8 @@ export default {
         }
     },
     mounted: function () {
-        var self = this;  
-        self.type = self.$route.query.type;          
+        var self = this;
+        self.type = self.$route.query.type;
         mui.init();
         mui.ready(function(){
             mui("#scroll").pullRefresh({
@@ -88,7 +88,7 @@ export default {
                 },
                 up: {
                     auto: true,
-                    contentnomore: '没有更多消息了',
+                    contentnomore: '',
                     callback : function(){
                         self.getMore();
                     }

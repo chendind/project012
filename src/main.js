@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import vueTap from 'v-tap';
 import router from './router'
+// import 'src/assets/js/vconsole.min.js'
 import "src/assets/less/public.less"
 import "src/assets/less/index.less"
 Vue.use(vueTap)

@@ -27,7 +27,7 @@
 
 
 <script>
-var imgurl = require("../../static/source/images/mask2.jpg")
+var imgurl = require("assets/images/mask2.jpg")
 import {getProduct} from 'ajax'
 
 export default {

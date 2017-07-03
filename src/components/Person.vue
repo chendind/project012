@@ -1,7 +1,7 @@
 <template>
 	<div class="mui-content bg white" style="background-color: white;height: 100vh;">
         <div class="bg mui-card-content" :style="'height: 175px;text-align: center;background-image:url(' + bg + ')'">
-            <img class="border circle" :src="person.img" style="height: 80px;width: 80px;margin: 20px 0 8px;">
+            <img class="border circle" :src="person.img || avator" style="height: 80px;width: 80px;margin: 20px 0 8px;">
             <p class="color c3" style="margin-bottom: 3px;font-size: 15px;">{{person.nickName}}</p>
             <p class="mui-h6 color c9">剩余积分：{{person.score}}</p>
         </div>
@@ -22,12 +22,12 @@
 
 <script>
 import {getUser} from 'ajax'
-var bg = require('../assets/images/bg.png')
 export default {
 	name: 'person',
     data(){
         return {
-            bg,
+            bg: require('assets/images/bg.png'),
+            avator: require('assets/images/user.png'),
             person: {}
         }
     },

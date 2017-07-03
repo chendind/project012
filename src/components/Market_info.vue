@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-	    <a href="#/" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
+	    <a @click="back" class="mui-icon iconfont icon-zuo1 color white icon-sm"></a>
       <h1 class="mui-title color white">{{data.name}}</h1>
     </header>
     <nav class="mui-bar mui-bar-tab noshadow bg maincolor">
@@ -56,12 +56,15 @@
 
 
 <script>
-var imgurl = require("../../static/source/images/mask.jpg");
+var imgurl = require("assets/images/mask.jpg");
 import { getMerchant, getEvaluations } from 'ajax'
 
 export default {
 	name: "market_info",
     methods:{
+      back(){
+        history.back();
+      },
       contact(){
         document.getElementById('telphoneTag').click();
       }
@@ -76,12 +79,16 @@ export default {
     	}
     },
     beforeRouteEnter(to, from, next){
+      console.log(to.query.id)
       getMerchant(to.query.id).then((res)=>{
         next($vm => {
           $vm.data = res;
           $vm.evalId = res.evaluationModel.id;
           getEvaluations($vm.evalId).then(data=>{
               $vm.evals = data.data;
+              $vm.$nextTick(() => {
+                mui.previewImage();
+              })
           },msg=>{
             console.log(msg)
           })
