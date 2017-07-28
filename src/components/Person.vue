@@ -7,6 +7,9 @@
         </div>
         <ul class="mui-table-view">
             <li class="mui-table-view-cell mui-media">
+                <a href="#/person_info" class="mui-navigate-right">个人资料</a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
                 <a href="#/person_my_order" class="mui-navigate-right">我的订单</a>
             </li>
             <li class="mui-table-view-cell mui-media">
@@ -16,26 +19,38 @@
                 <a href="#/history_rate" class="mui-navigate-right">历史评价</a>
             </li>
         </ul>
+        <div class="pd15 mv10" v-if="agent !== 'wechat'">
+          <div class="mui-btn mui-btn-block mui-btn-danger pd10" @click="logout">退出登录</div>
+        </div>
+
     </div>
 </template>
 
 
 <script>
+import {getAgent} from 'src/assets/js/util.js'
 import {getUser} from 'ajax'
+import router from '../router'
 export default {
 	name: 'person',
     data(){
         return {
             bg: require('assets/images/bg.png'),
             avator: require('assets/images/user.png'),
-            person: {}
+            person: {},
+            agent: getAgent()
         }
     },
-    beforeRouteEnter(to, from, next) {
+    methods: {
+      logout(){
+        window.localStorage.removeItem('phone')
+        window.localStorage.removeItem('password')
+        router.replace({path: '/app_login'})
+      }
+    },
+    mounted(){
       getUser().then((res)=>{
-        next($vm=>{
-          $vm.person = res || {}
-        })
+        this.person = res || {}
       })
     }
 }

@@ -86,7 +86,10 @@ export default {
       } else {
         resetPassword(this.phone, this.code, this.password1).then(data => {
           if (data.state == 0) {
-            mui.toast('重置密码成功')
+            mui.toast('重置密码成功，将跳转至登录页面')
+            setTimeout(()=>{
+              router.push({path: 'app_login'});
+            }, 800)
           } else if (data.msg) {
             mui.toast(data.msg)
           }

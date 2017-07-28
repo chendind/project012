@@ -1,8 +1,7 @@
 <template>
   <div class="bg white ph15" style="min-height: 100vh">
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
-      <a class="mui-icon iconfont icon-zuo1 color white icon-sm" href="#/app_login"></a>
-      <h1 class="mui-title color white">注册</h1>
+      <h1 class="mui-title color white">绑定手机号</h1>
     </header>
     <div class="mui-content bg white">
       <div class="fields">
@@ -27,9 +26,10 @@
           <input class="field-input input-no-border" type="password" placeholder="请再次输入密码" v-model="password2">
         </div>
       </div>
-      <div class="btn-block btn-maincolor mv20" style="margin-bottom: 10px !important;" @tap="regist">注册</div>
+      <div class="btn-block btn-maincolor mv20" style="margin-bottom: 10px !important;" @tap="bindPhone">绑定</div>
       <div class="center" style="font-size: 12px;">
-        <router-link :to="{path: '/app_login', query: {shouldBind: $route.query.shouldBind}}">已有账号，去登录</router-link>
+        <router-link :to="{path: '/app_login'}">手机号登录</router-link> ｜
+        <router-link :to="{path: '/app_regist'}">手机号注册</router-link>
       </div>
     </div>
   </div>
@@ -37,9 +37,9 @@
 
 <script>
 import router from '../router.js'
-import { regist, sendCode, boundWeichat, goAuthorize } from 'ajax'
+import { bindPhone, sendCode, boundWeichat } from 'ajax'
 export default {
-  name: 'app_regist',
+  name: 'bind_phone',
   components: {
   },
   data(){
@@ -76,7 +76,8 @@ export default {
         }
       }
     },
-    regist(){
+    bindPhone(){
+      console.log(this.phone)
       if (isNaN(this.phone) || (this.phone+'').length !== 11){
         mui.toast('请输入正确的手机号')
       } else if(!this.code){
@@ -86,14 +87,18 @@ export default {
       } else if(this.password1 != this.password2){
         mui.toast('两次密码输入不一致')
       } else {
-        regist(this.phone, this.code, this.password1).then(data => {
+        bindPhone(this.phone, this.code, this.password1).then(data => {
           if (data.state == 0) {
-            var shouldBind = this.$route.query.shouldBind
-            if (shouldBind) {
-              goAuthorize(true)
-            } else {
+
+            mui.toast('绑定成功，将跳转至首页');
+            setTimeout(()=>{
               router.push({path: '/'});
-            }
+            }, 800)
+          } else if(data.state == 20000){
+            mui.toast('手机号已存在，请直接通过手机号登录');
+            setTimeout(()=>{
+              router.push({path:'/app_login'});
+            }, 800)
           }
         })
       }

@@ -130,14 +130,14 @@ export default {
       mui.ready(function(){
           mui("#scroll").pullRefresh({
               down: {
-                  callback : function(){
+                  callback: function(){
                       self.getNewest();
                   }
               },
               up: {
                   auto: true,
                   contentnomore: '没有更多消息了',
-                  callback : function(){
+                  callback: function(){
                       self.getMyEvluation();
                   }
               }

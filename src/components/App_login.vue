@@ -15,7 +15,7 @@
           <input class="field-input input-no-border" type="password" placeholder="请输入密码" v-model="password">
         </div>
       </div>
-      <div class="btn-block btn-maincolor mv20" style="margin-bottom: 10px !important;" @tap="login">登录</div>
+      <div class="btn-block btn-maincolor mv20" style="margin-bottom: 10px !important;" @tap="loginButtonClick">登录</div>
       <div>
         <a class="mui-pull-right color c9" href="#/app_findPassword">忘记密码</a>
       </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {passwordLogin} from 'ajax'
+import {passwordLogin, boundWeichat, goAuthorize, getUser} from 'ajax'
 import router from '../router.js'
 export default {
   name: 'app_login',
@@ -37,18 +37,42 @@ export default {
     }
   },
   methods: {
-    login(){
-      passwordLogin(this.phone, this.password).then(data=>{
+    loginButtonClick(){
+      this.login(this.phone, this.password)
+    },
+    login(phone, password){
+      passwordLogin(phone, password).then(data=>{
         if(data.state == 0){
-          router.push({path: '/'});
+          window.localStorage.setItem('phone', phone)
+          window.localStorage.setItem('password', password)
+          var shouldBind = this.$route.query.shouldBind
+          if (shouldBind) {
+            goAuthorize(true)
+          } else {
+            router.push({path: '/'});
+          }
         } else if(data.msg) {
           mui.toast(data.msg)
         }
       })
     },
     goAppRegist(){
-      router.push({path: 'app_regist'});
+      var shouldBind = this.$route.query.shouldBind
+      router.push({path: 'app_regist', query: {shouldBind}});
+    },
+  },
+  created(){
+    // getUser().then(data => {
+    //   if(!!data.phone){
+    //     router.push({path: '/'})
+    //   }
+    // })
+    const phone = window.localStorage.getItem('phone')
+    const password = window.localStorage.getItem('password')
+    if(phone && password){
+      this.login(phone, password)
     }
+
   },
   mounted(){
   }

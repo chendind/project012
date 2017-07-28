@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { getProductInfo, getEvaluations } from 'ajax';
+import { getProductInfo, getEvaluations, focusGood } from 'ajax';
 export default {
   name: 'product_info',
   data() {
@@ -70,6 +70,39 @@ export default {
     back(){
       history.back();
     },
+    getLocationAndFocus(){
+      const productId = this.$route.query.id
+      wx.getLocation({
+        type: 'wgs84',
+        success: function (res) {
+          var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+          var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+          console.log(res);
+          $.ajax({
+            url: 'http://api.map.baidu.com/geocoder/v2/?ak=Ogc3s9tT2jSfg8GvYBScols0iyeSoUGG&callback=renderReverse&location=' + latitude + ',' + longitude + '&output=json&pois=1&coordtype=wgs84ll',
+            type: "GET",
+            dataType: "jsonp",
+            jsonp: "callback",
+            success: function(data){
+              if(data.status == 0){
+                var province = data.result.addressComponent.province || "";
+                var city = data.result.addressComponent.city || "";
+
+                focusGood(productId, `${province},${city}`).then(data => {
+
+                })
+              }
+            },
+            error: function(error){
+              defaultHandle(error);
+            }
+          })
+        },
+        cancel: function () {
+          defaultHandle();
+        }
+      })
+    }
   },
   mounted() {
     const productId = this.$route.query.id
@@ -91,7 +124,15 @@ export default {
         })
       }
     })
+    this.$root.wxConfig().then(data=>{
+      wx.ready((data)=> {
+        this.getLocationAndFocus()
+      })
+    });
   }
+}
+function defaultHandle(data){
+  console.log(data)
 }
 </script>
 <style lang='less' scoped>

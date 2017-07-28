@@ -1,18 +1,7 @@
 # project012
 
-> A Vue.js project
+#### 扫描二维码
+  - app监听的url: h5:scanQRCode
+  - 扫描二维码成功调用js代码: h5scanSuccess(result); // result是二维码扫描结果（字符串）记得两边加引号""
+  - 扫描二维码失败或中途取消: h5scanFail();
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

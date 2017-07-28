@@ -39,11 +39,7 @@ export default {
   components: {
   },
   mounted(){
-    // get.getUser().then((res)=>{
-    //   return res
-    // }).catch((e)=>{
-    //   throw e
-    // })
+
   }
 }
 </script>

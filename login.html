@@ -1,15 +1,74 @@
 <script type="text/javascript" src="static/source/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
-	var r = /code=([\w-]*)&/
-	var code = r.exec(location.search)[1]
-	var ajax = $.ajax({
-			url: "/oauth",
-			data: {
-				code: code
-			}
-		})
-	$.when(ajax).done(function () {
-		window.location.href = "index.html"
-	})
 
+
+
+var query = getArgs()
+var code = query.code;
+if(query.state == "true"){
+  bindWechat(code).done(function(data){
+    if(data.state == 0){
+      window.location.href="index.html"
+    } else if (data.state == 10011) {
+
+    } else if(data.state == 20000) {
+      alert(data.msg);
+      // window.location.href = "index.html"
+    }
+  })
+} else {
+  oauthLogin(code).done(function (data) {
+      if (data.state == 0) {
+        window.location.href = "index.html"
+      } else if(data.state == 20010 || data.state == 10001) {
+        window.location.href = "index.html#/app_login?shouldBind=true"
+      }
+
+  })
+}
+
+
+
+
+function oauthLogin(code){
+  return $.ajax({
+    url: "/oauth",
+    data: {
+      code: code
+    }
+  })
+}
+function bindWechat(code){
+  return $.ajax({
+    url: '/user/boundWeichat',
+    data: {
+      code: code
+    }
+  });
+}
+function hasPhone(){
+  return $.ajax({
+    url: '/user/hasPhone',
+    type: 'post'
+  })
+}
+function getArgs(){
+    var args = {};
+        var query = location.search.substring(1);
+         // Get query string
+    var pairs = query.split("&");
+                    // Break at ampersand
+     for(var i = 0; i < pairs.length; i++) {
+            var pos = pairs[i].indexOf('=');
+             // Look for "name=value"
+            if (pos == -1) continue;
+                    // If not found, skip
+                var argname = pairs[i].substring(0,pos);// Extract the name
+                var value = pairs[i].substring(pos+1);// Extract the value
+                value = decodeURIComponent(value);// Decode it, if needed
+                args[argname] = value;
+                        // Store as a property
+        }
+    return args;// Return the object
+}
 </script>

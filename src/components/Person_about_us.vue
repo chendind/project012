@@ -6,9 +6,9 @@
             <a class="mui-icon iconfont icon-iconfontcolor39 icon-sm mui-pull-right color white"  @tap="contact_us()"></a>
         </header>
         <div class="mui-content">
-            <img :src="require('assets/images/about.png')">
+            <img :src="require('assets/images/about.jpeg')">
             <p class="bg white color c3" style="line-height: 24px;padding: 15px;font-size: 13px;">
-                阿比西尼亚猫又称埃塞俄比亚猫、又因步态优美被誉为芭蕾舞猫。而阿比西尼亚猫的毛色同野兔相像，英国人亦称它为兔猫或球猫。阿比西尼亚猫历史悠久，原产于阿比西尼亚（今埃塞俄比亚）。在保存下来的古埃及神猫的木乃伊中，有一种血红色的猫与它十分相像，因此，许多人认为它是古埃及神猫的直系后代。
+                消费者可以扫码了解商品信息以及厂商信息，完善售后，也利于商家的客户管理和品牌维护
             </p>
         </div>
         <a href="tel:057188141010" style="display: none;" id="telphoneTag"></a>

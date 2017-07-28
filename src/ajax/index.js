@@ -1,16 +1,28 @@
+import router from 'src/router.js'
+import {getAgent} from 'src/assets/js/util.js'
 const factory = (ajax_) => (url) => {
   var ajax
   if (ajax_ == 'get')
     ajax = $.get
   else
     ajax = $.post
-
-  return Promise.resolve(ajax('http://tongzhuang.moovi-tech.com' + url)).then((res)=>{
-
+  return Promise.resolve(ajax(url)).then((res)=>{
+    console.log(res)
     if (res.state == 10011){
-      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx886a3b874e4322a4&redirect_uri=http%3a%2f%2ftongzhuang.moovi-tech.com%2flogin.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+      switch(getAgent()){
+          case 'wechat':
+            goAuthorize();
+          break;
+          case 'android':
+          case 'ios':
+          case 'pc':
+            router.push({path: 'app_login'})
+          break;
+      }
     }
+    console.log('ajax.js#1')
     return Promise.resolve(res)
+
     // if (res.state == 0 || res.state === undefined) {
 
     // }
@@ -22,6 +34,13 @@ const factory = (ajax_) => (url) => {
   })
 }
 
+export const goAuthorize = (shouldBind = false) => {
+  var redirect_uri = encodeURIComponent("http://xingweiapp.com/app/login.html")
+  var appid = 'wx886a3b874e4322a4'
+
+  window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${shouldBind}#wechat_redirect`
+}
+window.goAuthorize = goAuthorize;
 const get = factory('get')
 const post = factory('post')
 
@@ -135,12 +154,49 @@ export const passwordLogin = (phone, password) => {
 export const resetPassword = (phone, code, password) => {
   return post(`/user/resetPassword?phone=${phone}&code=${code}&password=${password}`)
 }
+export const focusGood = (goods_id, city) => {
+  return post(`/goods/focus?goods_id=${goods_id}&city=${city}`)
+}
 
+export const getJsApi = (url) => {
+  return post(`/wx/jsapi?url=${url}`)
+}
+export const hasPhone = () => {
+  return post(`/user/hasPhone`)
+}
+export const bindPhone = (phone, code, password) => {
+  return post(`/user/boundPhone?phone=${phone}&code=${code}&password=${password}`)
+}
+export const boundWeichat = (code) => {
+  return post(`/user/boundWeichat?code=${code}`)
+}
+export const editPersonInfo = ({nickName, img, sex, age}) => {
+  if(img == "null" || img == null) {
+    img = require("assets/images/user.png")
+  }
+  return post(`/user/edit?nickName=${nickName}&img=${img}&sex=${sex}&age=${age}`)
+}
 
-
-
-
-
+export const editPassword = ({nickName, img, sex, age}, old_password, new_password) => {
+  return post(`/user/edit?nickName=${nickName}&img=${img}&sex=${sex}&age=${age}&old_password=${old_password}&new_password=${new_password}`)
+}
+export const upload = (file,name,type = 1,img) => {
+  var fd = new FormData();
+  fd.append("file",file);
+  fd.append("name",name);
+  fd.append("type",type);
+  fd.append("img",img);
+  return $.ajax({
+    url: '/uploadFile',
+    type: 'post',
+    data: fd,
+    processData: false,
+    contentType: false,
+    xhrFields: {
+        withCredentials: false
+    }
+  })
+}
 
 
 

@@ -203,25 +203,7 @@ export default {
   background-color: rgb(68,191,255);
 }
 
-.mask{
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 998;
-  background-color: rgba(0,0,0,.3);
-}
-.tipText{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 6px;
-  padding: 10px 15px;
-  white-space: nowrap;
-}
+
 </style>
 
 

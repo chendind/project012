@@ -57,6 +57,13 @@ const routes = [
     }
   },
   {
+    path: '/bind_phone',
+    name: 'bind_phone',
+    component(r){
+      r(require('src/components/Bind_phone'));
+    }
+  },
+  {
     path: '/app_findPassword',
     name: 'app_findPassword',
     component(r){
@@ -110,6 +117,27 @@ const routes = [
     name: 'content_detail',
     component(r){
       r(require('src/components/Content_detail'));
+    }
+  },
+  {
+    path: '/person_info',
+    name: 'person_info',
+    component(r){
+      r(require('src/components/Person_info'));
+    }
+  },
+  {
+    path: '/person_info_name',
+    name: 'person_info_name',
+    component(r){
+      r(require('src/components/Person_info_name'));
+    }
+  },
+  {
+    path: '/person_info_password',
+    name: 'person_info_password',
+    component(r){
+      r(require('src/components/Person_info_password'));
     }
   },
   {

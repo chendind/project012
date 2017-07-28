@@ -42,27 +42,38 @@ export default {
   //   })
   // },
   methods: {
-      jumpProductInfo:function(){
-        // wx.ready(()=>{
-          wx.scanQRCode({
-              needResult: 1,
-              scanType: ["qrCode"],
-              success(res) {
-                const result = JSON.parse(res.resultStr);
-                if (result.type === 'business') {
-                  addFocus(result.code).then((data)=>{
-                    location.href = result.url;
-                  }).catch((e)=>{
-                    location.href = result.url;
-                  })
-                } else if (result.type === 'product') {
-                  location.href = result.url;
-                }
-              }
-          });
+      jumpProductInfo(){
+        this.$root.scanQRCode().then(resultStr => {
+          console.log(resultStr)
+          const result = JSON.parse(resultStr);
+          if (result.type === 'business') {
+            addFocus(result.code).then((data)=>{
+              location.href = result.url;
+            }).catch((e)=>{
+              location.href = result.url;
+            })
+          } else if (result.type === 'product') {
+            location.href = result.url;
+          }
+        })
+        // wx.scanQRCode({
+        //     needResult: 1,
+        //     scanType: ["qrCode"],
+        //     success(res) {
+        //       const result = JSON.parse(res.resultStr);
+        //       if (result.type === 'business') {
+        //         addFocus(result.code).then((data)=>{
+        //           location.href = result.url;
+        //         }).catch((e)=>{
+        //           location.href = result.url;
+        //         })
+        //       } else if (result.type === 'product') {
+        //         location.href = result.url;
+        //       }
+        //     }
         // });
       },
-      addMarket: function(){
+      addMarket(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
             if (obj.index === 0) {
               return
@@ -77,7 +88,7 @@ export default {
             }
           })
       },
-    getNewest: function () {
+    getNewest() {
         var self = this;
         getMerchantForPage(0,self.DATALENGTH).then((res)=>{
             self.list = res.list || [];
@@ -92,7 +103,7 @@ export default {
             }
         })
     },
-    getMore: function () {
+    getMore() {
         var self = this;
         getMerchantForPage(self.ListStart,self.DATALENGTH).then((res)=>{
             self.list = self.list.concat(res.list);
@@ -109,14 +120,15 @@ export default {
     }
   },
   created(){
-    const url = encodeURIComponent(location.href.split('#')[0]);
-    getSignature(url).then(signature=>{
-      wx.config($.extend(signature,{
-         debug: false,
-         appId: 'wx886a3b874e4322a4',
-         jsApiList: ['scanQRCode']
-      }));
-    })
+    this.$root.wxConfig()
+    // const url = encodeURIComponent(location.href.split('#')[0]);
+    // getSignature(url).then(signature=>{
+    //   wx.config($.extend(signature,{
+    //      debug: false,
+    //      appId: 'wx886a3b874e4322a4',
+    //      jsApiList: ['scanQRCode']
+    //   }));
+    // })
   },
   mounted: function () {
       var self = this;
