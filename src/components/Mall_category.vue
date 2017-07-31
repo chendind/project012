@@ -40,10 +40,9 @@ export default {
   },
   methods: {
     contact(i){
+      console.log(i)
       router.push({path: '/mall_order', query: {id: i.id}})
-    }
-  },
-  methods: {
+    },
         getNewest: function () {
             var self = this;
             getProductForPage(0,self.DATALENGTH,self.type).then((res)=>{

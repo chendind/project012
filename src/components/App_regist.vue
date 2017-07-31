@@ -94,6 +94,8 @@ export default {
             } else {
               router.push({path: '/'});
             }
+          } else if (data.msg) {
+            mui.toast(data.msg)
           }
         })
       }

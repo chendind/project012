@@ -58,12 +58,12 @@
 <script>
 var imgurl = require("assets/images/mask.jpg");
 import { getMerchant, getEvaluations } from 'ajax'
-
+import router from '../router.js'
 export default {
 	name: "market_info",
     methods:{
       back(){
-        history.back();
+        router.go(-1)
       },
       contact(){
         document.getElementById('telphoneTag').click();

@@ -7,7 +7,6 @@ const factory = (ajax_) => (url) => {
   else
     ajax = $.post
   return Promise.resolve(ajax(url)).then((res)=>{
-    console.log(res)
     if (res.state == 10011){
       switch(getAgent()){
           case 'wechat':
@@ -20,7 +19,6 @@ const factory = (ajax_) => (url) => {
           break;
       }
     }
-    console.log('ajax.js#1')
     return Promise.resolve(res)
 
     // if (res.state == 0 || res.state === undefined) {

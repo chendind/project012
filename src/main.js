@@ -5,7 +5,7 @@ import vueTap from 'v-tap';
 import router from './router'
 import {getJsApi, hasPhone} from 'src/ajax/index.js'
 import {getAgent} from 'src/assets/js/util.js'
-// import 'src/assets/js/vconsole.min.js'
+import 'src/assets/js/vconsole.min.js'
 import "src/assets/less/public.less"
 import "src/assets/less/index.less"
 Vue.use(vueTap)

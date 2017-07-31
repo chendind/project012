@@ -24,7 +24,8 @@
 
 <script>
 import {getMerchantForPage, addFocus, getSignature} from 'ajax'
-
+import router from '../router.js'
+let index = 0
 export default {
   name: 'market',
   data: function(){
@@ -44,17 +45,25 @@ export default {
   methods: {
       jumpProductInfo(){
         this.$root.scanQRCode().then(resultStr => {
-          console.log(resultStr)
-          const result = JSON.parse(resultStr);
-          if (result.type === 'business') {
-            addFocus(result.code).then((data)=>{
+          try{
+            const result = JSON.parse(resultStr);
+            if (result.type === 'business') {
+              addFocus(result.code).then((data)=>{
+                location.href = result.url;
+              }).catch((e)=>{
+                location.href = result.url;
+              })
+            } else if (result.type === 'product') {
               location.href = result.url;
-            }).catch((e)=>{
-              location.href = result.url;
-            })
-          } else if (result.type === 'product') {
-            location.href = result.url;
+            } else {
+              location.href="index.html#/market"
+            }
+          } catch(e){
+            console.log(e)
+            // location.href="index.html#/market"
           }
+
+
         })
         // wx.scanQRCode({
         //     needResult: 1,
@@ -131,24 +140,28 @@ export default {
     // })
   },
   mounted: function () {
-      var self = this;
+  },
+  beforeRouteEnter(to, from, next){
+    console.log(index++)
+    next($vm => {
       mui.init();
       mui.ready(function(){
           mui("#scroll").pullRefresh({
               down: {
                   callback : function(){
-                      self.getNewest();
+                      $vm.getNewest();
                   }
               },
               up: {
                   auto: true,
                   contentnomore: '',
                   callback : function(){
-                      self.getMore();
+                      $vm.getMore();
                   }
               }
           });
       });
+    })
   }
 }
 </script>

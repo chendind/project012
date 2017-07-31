@@ -90,9 +90,13 @@ export default {
             phone: this.phone,
             address: this.block + ' ' + this.address
           }).then((res)=>{
-            mui.alert('提交成功', ()=>{
-              router.push({path: '/person_my_order'})
-            })
+            if(res.state == 0){
+              mui.alert('提交成功', ()=>{
+                router.push({path: '/person_my_order'})
+              })
+            } else if(res.detail){
+              mui.toast(res.detail)
+            }
           }).catch((e)=>{
             mui.alert(e.message)
           })
