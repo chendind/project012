@@ -141,6 +141,10 @@ export default {
             mui.alert('评价成功', undefined, undefined, ()=>{
               history.back();
             });
+          } else if(data.msg) {
+            mui.toast(data.msg)
+          } else {
+            mui.toast('评论内容暂不支持表情')
           }
         })
       }

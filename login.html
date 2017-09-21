@@ -5,28 +5,34 @@
 
 var query = getArgs()
 var code = query.code;
+// alert(JSON.stringify(query))
 if(query.state == "true"){
   bindWechat(code).done(function(data){
     if(data.state == 0){
       window.location.href="index.html"
-    } else if (data.state == 10011) {
-
-    } else if(data.state == 20000) {
-      alert(data.msg);
+    }else if(data.state == 20000) {
+      // alert(data.msg);
+      wechatLogin(code)
       // window.location.href = "index.html"
+    } else{
+      alert(JSON.stringify(data));
     }
   })
 } else {
-  oauthLogin(code).done(function (data) {
-      if (data.state == 0) {
-        window.location.href = "index.html"
-      } else if(data.state == 20010 || data.state == 10001) {
-        window.location.href = "index.html#/app_login?shouldBind=true"
-      }
-
-  })
+  wechatLogin(code)
 }
 
+function wechatLogin(code){
+  oauthLogin(code).done(function (data) {
+    if (data.state == 0) {
+      window.location.href = "index.html"
+    } else if(data.state == 20010 || data.state == 10001) {
+      window.location.href = "index.html#/app_login?shouldBind=true"
+    } else {
+      alert(JSON.stringify(data));
+    }
+  })
+}
 
 
 

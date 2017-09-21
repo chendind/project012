@@ -16,28 +16,36 @@ const routes = [
         path: '/market',
         name: 'market',
         component(r){
-          r(require('src/components/Market'));
+          require.ensure([], (require) => {
+            r(require('src/components/Market'))
+          }, 'main')
         }
       },
       {
         path: '/mall',
         name: 'mall',
         component(r){
-          r(require('src/components/Mall'));
+          require.ensure([], (require) => {
+            r(require('src/components/Mall'));
+          }, 'main')
         }
       },
       {
         path: '/content',
         name: 'content',
         component(r){
-          r(require('src/components/Content'));
+          require.ensure([], (require) => {
+            r(require('src/components/Content'));
+          }, 'main')
         }
       },
       {
         path: '/person',
         name: 'person',
         component(r){
-          r(require('src/components/Person'));
+          require.ensure([], (require) => {
+            r(require('src/components/Person'));
+          }, 'main')
         }
       }
     ]
@@ -46,133 +54,171 @@ const routes = [
     path: '/app_login',
     name: 'app_login',
     component(r){
-      r(require('src/components/App_login'));
+      require.ensure([], (require) => {
+        r(require('src/components/App_login'));
+      }, 'main')
     }
   },
   {
     path: '/app_regist',
     name: 'app_regist',
     component(r){
-      r(require('src/components/App_regist'));
+      require.ensure([], (require) => {
+        r(require('src/components/App_regist'));
+      }, 'main')
     }
   },
-  {
-    path: '/bind_phone',
-    name: 'bind_phone',
-    component(r){
-      r(require('src/components/Bind_phone'));
-    }
-  },
+  // {
+  //   path: '/bind_phone',
+  //   name: 'bind_phone',
+  //   component(r){
+  //     require.ensure([], (require) => {
+  //       r(require('src/components/Bind_phone'));
+  //     }, 'main')
+  //   }
+  // },
   {
     path: '/app_findPassword',
     name: 'app_findPassword',
     component(r){
-      r(require('src/components/App_findPassword'));
+      require.ensure([], (require) => {
+        r(require('src/components/App_findPassword'));
+      }, 'main')
     }
   },
   {
     path: '/market_info',
     name: 'market_info',
     component(r){
-      r(require('src/components/Market_info'));
+      require.ensure([], (require) => {
+        r(require('src/components/Market_info'));
+      }, 'main')
     }
   },
   {
     path: '/market_message',
     name: 'market_message',
     component(r){
-      r(require('src/components/Market_message'));
+      require.ensure([], (require) => {
+        r(require('src/components/Market_message'));
+      }, 'main')
     }
   },
   {
     path: '/mall_search',
     name: 'mall_search',
     component(r){
-      r(require('src/components/Mall_search'));
+      require.ensure([], (require) => {
+        r(require('src/components/Mall_search'));
+      }, 'main')
     }
   },
   {
     path: '/mall_category',
     name: 'mall_category',
     component(r){
-      r(require('src/components/Mall_category'));
+      require.ensure([], (require) => {
+        r(require('src/components/Mall_category'));
+      }, 'main')
     }
   },
   {
     path: '/mall_info',
     name: 'mall_info',
     component(r){
-      r(require('src/components/Mall_info'));
+      require.ensure([], (require) => {
+        r(require('src/components/Mall_info'));
+      }, 'main')
     }
   },
   {
     path: '/mall_order',
     name: 'mall_order',
     component(r){
-      r(require('src/components/Mall_order'));
+      require.ensure([], (require) => {
+        r(require('src/components/Mall_order'));
+      }, 'main')
     }
   },
   {
     path: '/content_detail',
     name: 'content_detail',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Content_detail'));
+    }, 'main')
     }
   },
   {
     path: '/person_info',
     name: 'person_info',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Person_info'));
+    }, 'main')
     }
   },
   {
     path: '/person_info_name',
     name: 'person_info_name',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Person_info_name'));
+    }, 'main')
     }
   },
   {
     path: '/person_info_password',
     name: 'person_info_password',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Person_info_password'));
+    }, 'main')
     }
   },
   {
     path: '/person_about_us',
     name: 'person_about_us',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Person_about_us'));
+    }, 'main')
     }
   },
   {
     path: '/person_my_order',
     name: 'person_my_order',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Person_my_order'));
+    }, 'main')
     }
   },
   {
     path: '/history_rate',
     name: 'history_rate',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/History_rate'));
+    }, 'main')
     }
   },
   {
     path: '/product_info',
     name: 'product_info',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Product_info'));
+    }, 'main')
     }
   },
   {
     path: '/rate',
     name: 'rate',
     component(r){
+      require.ensure([], (require) => {
       r(require('src/components/Rate'));
+    }, 'main')
     }
   }
 ]

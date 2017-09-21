@@ -36,6 +36,7 @@
                     <a href="#/person_info_password" class="mui-navigate-right">修改密码</a>
                 </li>
             </ul>
+
         </div>
         <input type="file" id="avatorInput" style="display: none;">
         <div class="mask" v-show="loadingShow">

@@ -68,6 +68,8 @@ export default {
               }, 1000)
             } else if (data.msg) {
               mui.toast(data.msg)
+            } else {
+              mui.toast('网络异常')
             }
           })
         }
@@ -92,6 +94,8 @@ export default {
             }, 800)
           } else if (data.msg) {
             mui.toast(data.msg)
+          } else {
+            mui.toast('网络异常')
           }
         })
       }

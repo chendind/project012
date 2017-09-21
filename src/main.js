@@ -5,7 +5,7 @@ import vueTap from 'v-tap';
 import router from './router'
 import {getJsApi, hasPhone} from 'src/ajax/index.js'
 import {getAgent} from 'src/assets/js/util.js'
-import 'src/assets/js/vconsole.min.js'
+// import 'src/assets/js/vconsole.min.js'
 import "src/assets/less/public.less"
 import "src/assets/less/index.less"
 Vue.use(vueTap)
@@ -34,15 +34,26 @@ const rootVue = new Vue({
     wxConfig(){
       return getJsApi(location.origin + location.pathname).then(data => {
         if(data.state == 0){
-          wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: this.appId, // 必填，公众号的唯一标识
-            timestamp: data.timestamp, // 必填，生成签名的时间戳
-            nonceStr: data.nonceStr, // 必填，生成签名的随机串
-            signature: data.signature,// 必填，签名，见附录1
-            jsApiList: ["getLocation",'scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-          });
+          // return new Promise(resolve => {
+            wx.config({
+              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: this.appId, // 必填，公众号的唯一标识
+              timestamp: data.timestamp, // 必填，生成签名的时间戳
+              nonceStr: data.nonceStr, // 必填，生成签名的随机串
+              signature: data.signature,// 必填，签名，见附录1
+              jsApiList: ["getLocation",'scanQRCode'], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2,
+              success: function(data){
+                console.log('success')
+                console.log(data)
+                // resolve
+              }
+            });
+          // })
+          wx.ready(()=>{
+            console.log('ready')
+          })
         }
+        return Promise.resolve(data)
       })
     },
     scanQRCode(){
@@ -82,11 +93,12 @@ const rootVue = new Vue({
         e.preventDefault()
         window.location.href=$(this).attr('href');
     })
-    hasPhone().then((data) => {
-      if(!data.data && data.state == 0){
-        window.location.href = "index.html#/bind_phone"
-      }
-    })
+    // hasPhone().then((data) => {
+    //   if(!data.data && data.state == 0 && window.location.href.indexOf('bind_phone') == -1){
+    //     alert(JSON.stringify(data))
+    //     window.location.href = "index.html#/bind_phone"
+    //   }
+    // })
     window.h5scanSuccess = (result) => {
       console.log('main.js: h5scanSuccess:')
       console.log(result)

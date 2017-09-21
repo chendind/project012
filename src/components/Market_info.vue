@@ -13,7 +13,7 @@
       </router-link>
     </nav>
     <div class="mui-content">
-        <div class="fixBox1" :style="'background-image: url('+data.backImg+')'"></div>
+        <div class="fixBox1" :style="{'background-image': 'url('+encode(data.backImg)+')'}"></div>
         <div class="mui-card-content bg white">
             <div class="mui-card-content-inner">
                 <img class="middle border img-sm" :src="data.headImg" style="position: absolute;top:-10px;">
@@ -57,7 +57,7 @@
 
 <script>
 var imgurl = require("assets/images/mask.jpg");
-import { getMerchant, getEvaluations } from 'ajax'
+import { getMerchant, getEvaluations, addFocus } from 'ajax'
 import router from '../router.js'
 export default {
 	name: "market_info",
@@ -67,6 +67,9 @@ export default {
       },
       contact(){
         document.getElementById('telphoneTag').click();
+      },
+      encode(url){
+        return window.encodeURI(url)
       }
     },
     data(){
@@ -79,11 +82,11 @@ export default {
     	}
     },
     beforeRouteEnter(to, from, next){
-      console.log(to.query.id)
       getMerchant(to.query.id).then((res)=>{
         next($vm => {
           $vm.data = res;
           $vm.evalId = res.evaluationModel.id;
+          addFocus(res.code).then((data)=>{})
           getEvaluations($vm.evalId).then(data=>{
               $vm.evals = data.data;
               $vm.$nextTick(() => {

@@ -97,7 +97,7 @@
 	                        <div class="mui-card-content-inner">
 	                            <p class="color c3 mb0">{{item.name}}</p>
 	                            <p>{{item.description}}</p>
-	                            <p class="color maincolor mb0">积分 {{item.type}}</p>
+	                            <p class="color maincolor mb0">{{item.score}}积分 {{item.type}}</p>
 	                        </div>
 	                    </div>
 	                    <div :href="'#/mall_order?id='+item.id" class="mui-card-content bg maincolor center pd10">

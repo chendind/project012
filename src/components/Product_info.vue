@@ -72,36 +72,57 @@ export default {
     },
     getLocationAndFocus(){
       const productId = this.$route.query.id
-      wx.getLocation({
-        type: 'wgs84',
-        success: function (res) {
-          var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-          var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-          console.log(res);
-          $.ajax({
-            url: 'http://api.map.baidu.com/geocoder/v2/?ak=Ogc3s9tT2jSfg8GvYBScols0iyeSoUGG&callback=renderReverse&location=' + latitude + ',' + longitude + '&output=json&pois=1&coordtype=wgs84ll',
-            type: "GET",
-            dataType: "jsonp",
-            jsonp: "callback",
-            success: function(data){
-              if(data.status == 0){
-                var province = data.result.addressComponent.province || "";
-                var city = data.result.addressComponent.city || "";
+      // wx.getLocation({
+      //   type: 'wgs84',
+      //   success: function (res) {
+      //     var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+      //     var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+      //     console.log(res);
+      //     $.ajax({
+      //       url: 'http://api.map.baidu.com/geocoder/v2/?ak=Ogc3s9tT2jSfg8GvYBScols0iyeSoUGG&callback=renderReverse&location=' + latitude + ',' + longitude + '&output=json&pois=1&coordtype=wgs84ll',
+      //       type: "GET",
+      //       dataType: "jsonp",
+      //       jsonp: "callback",
+      //       success: function(data){
+      //         if(data.status == 0){
+      //           var province = data.result.addressComponent.province || "";
+      //           var city = data.result.addressComponent.city || "";
 
-                focusGood(productId, `${province},${city}`).then(data => {
+      //           focusGood(productId, `${province},${city}`).then(data => {
 
-                })
-              }
-            },
-            error: function(error){
-              defaultHandle(error);
-            }
-          })
-        },
-        cancel: function () {
-          defaultHandle();
+      //           })
+      //         }
+      //       },
+      //       error: function(error){
+      //         defaultHandle(error);
+      //       }
+      //     })
+      //   },
+      //   cancel: function () {
+      //     defaultHandle();
+      //   }
+      // })
+      var self = this;
+      var geolocation = new BMap.Geolocation();
+      var geoc = new BMap.Geocoder();
+      geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+          var point = new BMap.Point(r.point.lng, r.point.lat);
+          console.log(r.point.lng, r.point.lat)
+          geoc.getLocation(point, function(rs){
+            var addComp = rs.addressComponents;
+            // alert(productId)
+            // alert(`${addComp.province},${addComp.city}`)
+            focusGood(productId, `${addComp.province},${addComp.city}`).then(data => {
+              // alert(JSON.stringify(data))
+            });
+          });
+
         }
-      })
+        else {
+          mui.alert('获取您的地理位置信息失败');
+        }
+      },{enableHighAccuracy: true})
     }
   },
   mounted() {
@@ -124,10 +145,23 @@ export default {
         })
       }
     })
-    this.$root.wxConfig().then(data=>{
-      wx.ready((data)=> {
-        this.getLocationAndFocus()
-      })
+    // this.$root.wxConfig().then(data => {
+    //   if(data.state == 0){
+
+    //   }
+    // })
+    // wx.ready(()=>{
+    //   console.log('3 ready')
+    //   setTimeout(() => {
+    //     this.getLocationAndFocus()
+    //   }, 1800)
+    // })
+    this.getLocationAndFocus()
+    // window.getLocationAndFocus = this.getLocationAndFocus
+  },
+  beforeRouteEnter(to, from, next){
+    next($vm => {
+
     });
   }
 }

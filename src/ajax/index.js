@@ -8,16 +8,7 @@ const factory = (ajax_) => (url) => {
     ajax = $.post
   return Promise.resolve(ajax(url)).then((res)=>{
     if (res.state == 10011){
-      switch(getAgent()){
-          case 'wechat':
-            goAuthorize();
-          break;
-          case 'android':
-          case 'ios':
-          case 'pc':
-            router.push({path: 'app_login'})
-          break;
-      }
+      goToLogin()
     }
     return Promise.resolve(res)
 
@@ -30,6 +21,23 @@ const factory = (ajax_) => (url) => {
   }).catch((e)=>{
     return Promise.reject(e)
   })
+}
+window.goToLogin = function(){
+  switch(getAgent()){
+    case 'wechat':
+      if (window.location.href.indexOf('app_login') == -1 && window.location.href.indexOf('app_regist') == -1) {
+        goAuthorize();
+      }
+    break;
+    case 'android':
+    case 'ios':
+    case 'pc':
+      if (window.location.href.indexOf('app_login') == -1 && window.location.href.indexOf('app_regist') == -1) {
+        router.push({path: 'app_login'})
+      }
+
+    break;
+  }
 }
 
 export const goAuthorize = (shouldBind = false) => {
@@ -90,6 +98,7 @@ export const searchProductForPage = (keyword, start, length)=>{
 
 export const getArticleForPage = (start, length)=>{
   return post('/getArticleForPage' + `?start=${start}&length=${length}&type=user`)
+  // return post('/getArticleForPage' + `?start=${start}&length=${length}&type=test`)
 }
 
 export const getArticle = (id)=>{
@@ -191,7 +200,7 @@ export const upload = (file,name,type = 1,img) => {
     processData: false,
     contentType: false,
     xhrFields: {
-        withCredentials: false
+      withCredentials: false
     }
   })
 }

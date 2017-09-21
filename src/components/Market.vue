@@ -2,10 +2,10 @@
   <div class="mui-content">
     <header class="mui-bar mui-bar-nav top-bar bg maincolor noshadow">
       <!-- <a class="mui-icon iconfont icon-jia mui-pull-right color white" @tap="addMarket"></a> -->
-      <a class="mui-icon iconfont icon-saoyisao mui-pull-right color white" @tap="jumpProductInfo"></a>
+      <a class="mui-icon iconfont icon-saoyisao mui-pull-right color white" @tap="jumpProductInfo2"></a>
       <h1 class="mui-title color white">我的商家</h1>
     </header>
-    <div id="scroll" class="mui-content mui-scroll-wrapper">
+    <div id="scroll" class="mui-content mui-scroll-wrapper" v-show="isLogin">
       <div class="mui-scroll">
         <ul class="mui-table-view">
           <ul class="mui-table-view mt0" v-for="i in list">
@@ -18,6 +18,14 @@
           </ul>
         </ul>
       </div>
+
+    </div>
+    <div class="full-box center" v-show="!isLogin">
+      <div class="pd10 size16 mt10">您还未登录，请登录后查看</div>
+      <div class="pd10">
+        <div class="mui-btn mui-btn-block" type="success" @click="goToLogin">登录</div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -32,7 +40,8 @@ export default {
     return {
       list: [],
       DATALENGTH: 20,
-      ListStart: 0
+      ListStart: 0,
+      isLogin: true
     }
   },
   // beforeRouteEnter(to, from, next){
@@ -62,25 +71,30 @@ export default {
             console.log(e)
             // location.href="index.html#/market"
           }
-
-
         })
-        // wx.scanQRCode({
-        //     needResult: 1,
-        //     scanType: ["qrCode"],
-        //     success(res) {
-        //       const result = JSON.parse(res.resultStr);
-        //       if (result.type === 'business') {
-        //         addFocus(result.code).then((data)=>{
-        //           location.href = result.url;
-        //         }).catch((e)=>{
-        //           location.href = result.url;
-        //         })
-        //       } else if (result.type === 'product') {
-        //         location.href = result.url;
-        //       }
-        //     }
-        // });
+      },
+      jumpProductInfo2(){
+        if (this.isLogin) {
+          this.$root.scanQRCode().then(resultStr => {
+            var rex = /id=(\d*)/
+            var id;
+            window.location.href=resultStr;
+
+            // try{
+            //   id = resultStr.match(rex)[1]
+            //   if(resultStr.indexOf('market_info') > -1) {
+            //     router.push({path: '/market_info', query: {id}})
+            //   } else {
+            //     router.push({path: '/product_info', query: {id}})
+            //   }
+            // } catch(e){
+            //   console.log(e)
+            // }
+          })
+        } else {
+          mui.toast('请先登录再使用扫码功能')
+        }
+
       },
       addMarket(){
           mui.prompt(' ', '输入商家代码', '添加商家', null, function(obj){
@@ -100,6 +114,7 @@ export default {
     getNewest() {
         var self = this;
         getMerchantForPage(0,self.DATALENGTH).then((res)=>{
+          if (!res.state) {
             self.list = res.list || [];
             self.ListStart = res.list.length;
 
@@ -110,11 +125,17 @@ export default {
             else{
                 mui('#scroll').pullRefresh().refresh(true);
             }
+          } else {
+            // mui.toast('网络异常');
+            mui('#scroll').pullRefresh().endPulldownToRefresh();
+
+          }
         })
     },
     getMore() {
         var self = this;
         getMerchantForPage(self.ListStart,self.DATALENGTH).then((res)=>{
+          if (!res.state) {
             self.list = self.list.concat(res.list);
 
             if(self.ListStart + res.list.length == res.countAll){
@@ -125,24 +146,25 @@ export default {
             }
 
             self.ListStart += self.DATALENGTH;
+          } else {
+            // mui.toast('网络异常');
+            mui('#scroll').pullRefresh().endPullupToRefresh(false);
+            if (res.state == 10011) {
+              // self.isLogin = false
+            }
+          }
         })
+    },
+    goToLogin(){
+      goToLogin()
     }
   },
   created(){
     this.$root.wxConfig()
-    // const url = encodeURIComponent(location.href.split('#')[0]);
-    // getSignature(url).then(signature=>{
-    //   wx.config($.extend(signature,{
-    //      debug: false,
-    //      appId: 'wx886a3b874e4322a4',
-    //      jsApiList: ['scanQRCode']
-    //   }));
-    // })
   },
   mounted: function () {
   },
   beforeRouteEnter(to, from, next){
-    console.log(index++)
     next($vm => {
       mui.init();
       mui.ready(function(){
@@ -171,4 +193,15 @@ export default {
   #scroll{
     padding-bottom: 50px;
   }
+.full-box{
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 50px;
+  padding-top: 44px;
+}
 </style>

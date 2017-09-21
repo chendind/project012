@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {getAgent} from 'src/assets/js/util.js'
 import {passwordLogin, boundWeichat, goAuthorize, getUser} from 'ajax'
 import router from '../router.js'
 export default {
@@ -42,6 +43,7 @@ export default {
     },
     login(phone, password){
       passwordLogin(phone, password).then(data=>{
+        // alert(JSON.stringify(data))
         if(data.state == 0){
           window.localStorage.setItem('phone', phone)
           window.localStorage.setItem('password', password)
@@ -53,6 +55,8 @@ export default {
           }
         } else if(data.msg) {
           mui.toast(data.msg)
+        } else {
+          mui.toast('网络异常')
         }
       })
     },

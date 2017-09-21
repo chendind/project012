@@ -16,7 +16,7 @@
         </div>
         <div class="field field-with-icon">
           <i class="mui-icon iconfont icon-sms icon-sm field-icon color c9"></i>
-          <input class="field-input input-no-border" type="number" placeholder="请输入手机验证码" v-model="code">
+          <input class="field-input input-no-border" type="text" placeholder="请输入手机验证码" v-model="code">
         </div>
         <div class="field field-with-icon">
           <i class="mui-icon iconfont icon-mima icon-sm field-icon color c9"></i>
@@ -71,6 +71,8 @@ export default {
               }, 1000)
             } else if (data.msg) {
               mui.toast(data.msg)
+            } else {
+              mui.toast('网络异常')
             }
           })
         }
@@ -96,7 +98,9 @@ export default {
             }
           } else if (data.msg) {
             mui.toast(data.msg)
-          }
+          } else {
+              mui.toast('手机号已注册或网络异常')
+            }
         })
       }
     },

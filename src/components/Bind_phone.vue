@@ -44,7 +44,7 @@ export default {
   },
   data(){
     return {
-      phone: '',
+      phone: window.localStorage.getItem('phone') || '',
       code: '',
       password1: '',
       password2: '',
@@ -71,6 +71,8 @@ export default {
               }, 1000)
             } else if (data.msg) {
               mui.toast(data.msg)
+            } else {
+              mui.toast('网络异常')
             }
           })
         }
@@ -99,6 +101,8 @@ export default {
             setTimeout(()=>{
               router.push({path:'/app_login'});
             }, 800)
+          } else {
+            mui.toast('网络异常')
           }
         })
       }
